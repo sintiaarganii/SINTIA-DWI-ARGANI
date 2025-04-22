@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\SINTIA DWI ARGANI.props" />
+</Project>

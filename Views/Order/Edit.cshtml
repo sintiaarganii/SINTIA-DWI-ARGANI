@@ -1,0 +1,158 @@
+﻿@* @model SINTIA_DWI_ARGANI.Models.DTO.OrderDTO
+@using static SINTIA_DWI_ARGANI.Models.GeneralStatus
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create Order" : "Edit Order";
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>@(Model.Id == 0 ? "Create New Order" : "Edit Order")</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Order" asp-action="Index">Orders</a></li>
+                <li class="breadcrumb-item active">@(Model.Id == 0 ? "Create" : "Edit")</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order Information</h5>
+
+                        <!-- Display messages -->
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @TempData["ErrorMessage"]
+                            </div>
+                        }
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+
+                        <form asp-controller="Order" asp-action="Edit" method="post" class="row g-3 needs-validation" novalidate>
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="ProductId" />
+
+                            <!-- Product Selection -->
+                            <div class="col-md-6">
+                                <label asp-for="ProductId" class="form-label">Product</label>
+                                <select asp-for="ProductId" asp-items="ViewBag.Products" class="form-select" required>
+                                    <option value="">-- Select Product --</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a product.</div>
+                            </div>
+
+                            <!-- Quantity -->
+                            <div class="col-md-6">
+                                <label asp-for="Quantity" class="form-label">Quantity</label>
+                                <input asp-for="Quantity" class="form-control" type="number" min="1" required />
+                                <div class="invalid-feedback">Please enter valid quantity.</div>
+                            </div>
+
+                            <!-- Total Price -->
+                            <div class="col-md-6">
+                                <label asp-for="Total" class="form-label">Total Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input asp-for="Total" class="form-control" readonly />
+                                </div>
+                            </div>
+
+                            <!-- Order Date -->
+                            <div class="col-md-6">
+                                <label asp-for="OrderDate" class="form-label">Order Date</label>
+                                <input asp-for="OrderDate" class="form-control" type="date" required
+                                       value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <div class="invalid-feedback">Please select order date.</div>
+                            </div>
+
+                            <!-- Cashier Name -->
+                            <div class="col-md-6">
+                                <label asp-for="CashierName" class="form-label">Cashier Name</label>
+                                <input asp-for="CashierName" class="form-control" required />
+                                <div class="invalid-feedback">Please enter cashier name.</div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <label asp-for="StatusOrders" class="form-label">Status</label>
+                                <select asp-for="StatusOrders" class="form-select" required>
+                                    <option value="@GeneralStatusData.published">Published</option>
+                                    <option value="@GeneralStatusData.unpublished">Unpublished</option>
+                                </select>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> @(Model.Id == 0 ? "Create Order" : "Save Changes")
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            // Get product prices from ViewBag
+            const productPrices = @Html.Raw(Json.Serialize(ViewBag.ProductPrices ?? new { }));
+
+            // Calculate total when product or quantity changes
+            $('#ProductId, #Quantity').change(function () {
+                calculateTotal();
+            });
+
+            // Also calculate when quantity is typed
+            $('#Quantity').on('input', function () {
+                calculateTotal();
+            });
+
+            function calculateTotal() {
+                const productId = $('#ProductId').val();
+                const quantity = parseInt($('#Quantity').val()) || 0;
+                const price = parseFloat(productPrices[productId]) || 0;
+
+                if (productId && quantity > 0 && price > 0) {
+                    const total = price * quantity;
+                    $('#Total').val(total.toLocaleString('id-ID', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }));
+                } else {
+                    $('#Total').val('0.00');
+                }
+            }
+
+            // Initial calculation
+            calculateTotal();
+        });
+    </script>
+} *@

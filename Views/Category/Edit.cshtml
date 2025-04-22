@@ -1,0 +1,58 @@
+﻿@using SINTIA_DWI_ARGANI.Models.DB
+@model Category
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add Category" : "Edit Category";
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>@(Model.Id == 0 ? "Add New Category" : "Edit Category")</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categories</a></li>
+                <li class="breadcrumb-item active">@(Model.Id == 0 ? "Add" : "Edit")</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Category Information</h5>
+
+                        <form asp-controller="Category" asp-action="Edit" method="post" class="row g-3 needs-validation" novalidate>
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="col-md-12">
+                                <label for="CategoriName" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="CategoriName" asp-for="CategoriName" required>
+                                <div class="invalid-feedback">Please enter category name.</div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Status</label>
+                                <select asp-for="StatusCategori" class="form-select" required>
+                                    <option value="0">Published</option>
+                                    <option value="1">Unpublished</option>
+                                </select>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Save
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

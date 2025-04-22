@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Cashier Dashboard";
+    Layout = "~/Views/Shared/_LayoutCashier.cshtml";
+}
+
+<main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Dashboard Content -->
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left Side: Statistics -->
+            <div class="col-lg-8">
+                <div class="row">
+                    <!-- Total Sales -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Sales</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$5,345</h6>
+                                        <span class="text-success small pt-1 fw-bold">12%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Orders -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Orders</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart-check"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>145</h6>
+                                        <span class="text-danger small pt-1 fw-bold">2%</span>
+                                        <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Products -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card customers-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Products</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-box-seam"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>250</h6>
+                                        <span class="text-success small pt-1 fw-bold">8%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sales Overview Chart -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Sales Overview</h5>
+                                <canvas id="salesChart" style="max-height: 400px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Recent Activity -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Orders</h5>
+                        <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">10:30 AM</div>
+                                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                                <div class="activity-content">
+                                    Order #1234 placed by John Doe.
+                                </div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">11:45 AM</div>
+                                <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                                <div class="activity-content">
+                                    Order #1235 pending payment.
+                                </div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">1:20 PM</div>
+                                <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                                <div class="activity-content">
+                                    Order #1236 cancelled.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sales Chart
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monthly Sales Overview'
+                    }
+                }
+            }
+        });
+    </script>
+}

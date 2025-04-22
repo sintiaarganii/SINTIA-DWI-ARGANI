@@ -1,0 +1,56 @@
+﻿@using SINTIA_DWI_ARGANI.Models.DTO
+@model List<CategoryDTO>
+
+@{
+    ViewData["Title"] = "Category";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Category List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Supplier</h5>
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Category Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model)
+                                {
+                                    <tr>
+                                        <td>@data.Id</td>
+                                        <td>@data.CategoriName</td>
+                                        <td>@data.StatusCategori</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
