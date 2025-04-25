@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SINTIA_DWI_ARGANI.Filters;
 
 namespace SINTIA_DWI_ARGANI.Controllers
 {
-	public class AboutController : Controller
+    [AuthorizeRole("Cashier")]
+    public class AboutController : BaseController
 	{
 		public IActionResult Index()
 		{

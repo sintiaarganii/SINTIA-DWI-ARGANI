@@ -1,5 +1,4 @@
-﻿﻿@using SINTIA_DWI_ARGANI.Models.DTO
-@* @model LoginDTO *@
+﻿@* 
 @model CashierAccessDTO
 
 
@@ -155,6 +154,240 @@
         }
     </script>
 
+</body>
+
+</html> *@
+
+@using SINTIA_DWI_ARGANI.Models.DTO
+@model CashierAccessDTO
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Login - Cashier Portal</title>
+    <meta content="Login to your cashier account" name="description">
+    <meta content="cashier, login, portal" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+        .card-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+                outline: none;
+            }
+
+        .input-group button {
+            border: 1px solid #e2e8f0;
+            border-left: none;
+            background-color: #f7fafc;
+            border-radius: 0 8px 8px 0;
+            transition: background-color 0.3s ease;
+        }
+
+            .input-group button:hover {
+                background-color: #edf2f7;
+            }
+
+            .input-group button i {
+                font-size: 1.2rem;
+                color: #4a5568;
+            }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            }
+
+        .invalid-feedback {
+            font-size: 0.85rem;
+            color: #e53e3e;
+        }
+
+        .small a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .small a:hover {
+                color: #4f46e5;
+                text-decoration: underline;
+            }
+
+        .back-to-top {
+            background: #6366f1;
+            color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+            .back-to-top:hover {
+                background: #4f46e5;
+            }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="pt-4 pb-2 text-center">
+                                        <h5 class="card-title fs-4">Login to Your Account</h5>
+                                        <p class="small">Enter your username & password to login</p>
+                                    </div>
+                                    <form class="row g-3 needs-validation" asp-controller="Authentication" asp-action="LoginCashier" method="post" novalidate>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Username</label>
+                                            <input type="text" name="username" asp-for="Username" class="form-control" id="yourUsername" required>
+                                            <div class="invalid-feedback">Please enter a username.</div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <input type="password" asp-for="Password" class="form-control" id="yourPassword" required>
+                                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('yourPassword')">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="Password"></span>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <p class="small mb-0">Don't have an account? <a href="@Url.Action("RegisterCashier", "Authentication")">Create an account</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+
+            const successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                alert(successMessage);
+            }
+        });
+
+        function togglePassword(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = passwordInput.nextElementSibling.querySelector('i');
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.classList.remove("bi-eye");
+                toggleButton.classList.add("bi-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleButton.classList.remove("bi-eye-slash");
+                toggleButton.classList.add("bi-eye");
+            }
+        }
+    </script>
 </body>
 
 </html>

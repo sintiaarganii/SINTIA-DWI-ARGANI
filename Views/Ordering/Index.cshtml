@@ -1,0 +1,207 @@
+﻿@using SINTIA_DWI_ARGANI.Models.DTO
+@model List<OrderingDTO>
+@{
+    ViewData["Title"] = "Daftar Pesanan";
+}
+
+<style>
+    /* Pastikan body tidak memiliki padding/margin yang mengganggu */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f6f9ff; /* Warna latar belakang sesuai tema NiceAdmin */
+    }
+
+    /* Container utama */
+    .content-wrapper {
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Sesuaikan margin saat sidebar collapse */
+    .sidebar-collapsed .content-wrapper {
+        margin-left: 80px; /* Sesuaikan dengan lebar sidebar saat collapse */
+    }
+
+    /* Pastikan tabel responsif */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Card untuk tabel */
+    .card {
+        border: none;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+        /* Judul */
+        .card h4 {
+            font-weight: 600;
+            color: #012970; /* Warna biru tua dari tema NiceAdmin */
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+    /* Tombol "Buat Pesanan Baru" */
+    .btn-primary {
+        background: #4154f1; /* Warna biru dari tema NiceAdmin */
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+        color: #fff;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            background: #3345c1;
+            transform: translateY(-2px);
+        }
+
+    /* Tabel */
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table thead th {
+            background: #4154f1; /* Warna header tabel sesuai tema NiceAdmin */
+            color: #fff;
+            font-weight: 500;
+            padding: 15px;
+            text-align: left;
+            border: none;
+        }
+
+        .table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background: #f6f9ff;
+            }
+
+        .table tbody td {
+            padding: 15px;
+            color: #444444;
+            border-bottom: 1px solid #ebedf3;
+        }
+
+    /* Detail pesanan dalam list */
+    .order-details {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .order-details li {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+    /* Pesan jika tidak ada data */
+    .text-center {
+        color: #777;
+        font-style: italic;
+    }
+</style>
+
+<main id="main" class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <h4>Daftar Pesanan</h4>
+                <a asp-action="Create" class="btn btn-primary mb-3">Buat Pesanan Baru</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama Pelanggan</th>
+                                <th>Tanggal Pesanan</th>
+                                <th>Total Harga</th>
+                                <th>Detail Pesanan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model == null || !Model.Any())
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center">Belum ada pesanan.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var order in Model)
+                                {
+                                    <tr>
+                                        <td>@order.CustomerName</td>
+                                        <td>@order.OrderDate.ToString("dd MMMM yyyy")</td>
+                                        <td>Rp @order.TotalPrice.ToString("N2")</td>
+                                        <td>
+                                            <ul class="order-details">
+                                                @foreach (var detail in order.OrderDetails)
+                                                {
+                                                    <li>@detail.ProductName - @detail.Quantity unit</li>
+                                                }
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        // Deteksi perubahan status sidebar NiceAdmin
+        document.addEventListener('DOMContentLoaded', function () {
+            const body = document.body;
+            const contentWrapper = document.querySelector('.content-wrapper');
+
+            // Fungsi untuk menyesuaikan lebar konten
+            function adjustContentWidth() {
+                if (body.classList.contains('sidebar-collapsed')) {
+                    contentWrapper.classList.add('sidebar-collapsed');
+                } else {
+                    contentWrapper.classList.remove('sidebar-collapsed');
+                }
+            }
+
+            // Jalankan saat halaman dimuat
+            adjustContentWidth();
+
+            // Deteksi perubahan status sidebar
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.attributeName === 'class') {
+                        adjustContentWidth();
+                    }
+                });
+            });
+
+            observer.observe(body, { attributes: true });
+
+            // Deteksi klik pada toggler sidebar
+            const sidebarToggler = document.querySelector('.toggle-sidebar-btn');
+            if (sidebarToggler) {
+                sidebarToggler.addEventListener('click', adjustContentWidth);
+            }
+        });
+    </script>
+}

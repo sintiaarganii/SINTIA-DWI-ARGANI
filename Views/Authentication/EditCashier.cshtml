@@ -1,82 +1,195 @@
-﻿﻿
-@* SETELAH DARI CONTROLLER *@
-
-@using SINTIA_DWI_ARGANI.Models.DB
+﻿@using SINTIA_DWI_ARGANI.Models.DB
 @model Cashier
 
-
 @{
-    ViewData["Title"] = "Cashier";
+    ViewData["Title"] = "Edit Cashier";
 }
 
+<style>
+    .main {
+        width: 100%;
+        max-width: 700px;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 60px);
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        position: relative;
+        backdrop-filter: blur(10px);
+        width: 100%;
+    }
+
+    .user-icon {
+        background: #4f46e5;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+        .user-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+    .card-title {
+        font-weight: 600;
+        color: #2d3748;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #4a5568;
+        font-size: 0.95rem;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        padding: 0.75rem;
+        background: #f7fafc;
+        color: #4a5568;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control[readonly] {
+            background: #e9ecef;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
+
+    .btn-primary {
+        background: #4f46e5;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+    .btn-info {
+        background: #6b7280;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        color: white;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-info:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+    .text-center {
+        margin-top: 2rem;
+    }
+
+    .row.mb-3 {
+        margin-bottom: 1.5rem;
+    }
+
+    .copyright {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #718096;
+    }
+
+        .copyright a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+            .copyright a:hover {
+                text-decoration: underline;
+            }
+
+</style>
 
 <main id="main" class="main">
+    <div class="card">
+        <div class="user-icon">
+            <i class="bi bi-person"></i>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Edit User Cashier</h5>
 
-    <div class="pagetitle">
-        <h1>User List</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Forms</li>
-                <li class="breadcrumb-item active">Layouts</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Edit User Cashier</h5>
-
-                        <!-- Horizontal Form -->
-                        @* asp-action="Edit" harus edit *@
-                        <form asp-controller="Authentication" asp-action="EditCashier" method="post">
-                            <div class="row mb-3" hidden>
-                                <label for="Id" class="col-sm-2 col-form-label">Id</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Id" asp-for="Id">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="Name" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" asp-for="Name" readonly>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="Stock" class="col-sm-2 col-form-label">User Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="text" asp-for="Username" readonly>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="Stock" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="text" value="*******" readonly>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Status</label>
-                                <div class="col-sm-10">
-                                    <select asp-for="CashierStatus" class="form-select" aria-label="Default select example">
-                                        <option value=0>Published</option>
-                                        <option value=1>Unpublished</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Save Data</button>
-                                <a href="@Url.Action("Index","Authentication")" class="btn btn-info">Cancel</a>
-                            </div>
-                        </form><!-- End Horizontal Form -->
-
+            <!-- Horizontal Form -->
+            <form asp-controller="Authentication" asp-action="EditCashier" method="post">
+                <div class="row mb-3" hidden>
+                    <label for="Id" class="col-sm-2 col-form-label">Id</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Id" asp-for="Id">
                     </div>
                 </div>
-            </div>
+                <div class="row mb-3">
+                    <label for="Name" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" asp-for="Name" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="Username" class="col-sm-2 col-form-label">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" asp-for="Username" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="Password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="password" value="*******" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CashierStatus" class="form-select" aria-label="Default select example">
+                            <option value="0">Published</option>
+                            <option value="1">Unpublished</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary me-3">Save Data</button>
+                    <a href="@Url.Action("Index", "Authentication")" class="btn btn-info">Cancel</a>
+                </div>
+            </form><!-- End Horizontal Form -->
         </div>
-    </section>
+        <div class="copyright">
+            © SINTIA. ALL Rights Reserved. Designed by <a href="#">Your Team</a>
+        </div>
+    </div>
+</main>
 
-</main><!-- End #main -->
+@section Scripts {
+    <!-- Empty Scripts section -->
+}

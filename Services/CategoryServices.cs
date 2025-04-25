@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using SINTIA_DWI_ARGANI.Interfaces;
 using SINTIA_DWI_ARGANI.Models;
 using SINTIA_DWI_ARGANI.Models.DB;
@@ -82,15 +83,14 @@ namespace UITraining.Services
         }
         public bool DeleteCategori(int Id)
         {
-            var supplier = _context.Categoris.FirstOrDefault(x => x.Id == Id);
-            if (supplier != null && supplier.StatusCategori != GeneralStatusData.deleted)
+            var Caretory = _context.Categoris.FirstOrDefault(x => x.Id == Id);
+            if (Caretory != null && Caretory.StatusCategori != GeneralStatusData.deleted)
             {
-                supplier.StatusCategori = GeneralStatusData.deleted;
+                Caretory.StatusCategori = GeneralStatusData.deleted;
                 _context.SaveChanges();
                 return true;
             }
             return false;
         }
-
     }
 }

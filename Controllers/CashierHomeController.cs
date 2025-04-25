@@ -23,10 +23,8 @@ namespace SINTIA_DWI_ARGANI.Controllers
             ViewBag.UserId = userId;
             ViewBag.Name = name;
 
-            // Fetch products from the database
             var products = _context.Products.ToList();
 
-            // Create a view model to pass to the view
             var viewModel = new CashierHome
             {
                 Products = products
