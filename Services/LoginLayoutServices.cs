@@ -22,7 +22,7 @@ namespace SINTIA_DWI_ARGANI.Services
             }
             else if (user.IsInRole("Cashier"))
             {
-                return "~/Views/Shared/_Layout.cshtml"; // Layout untuk User
+                return "~/Views/Shared/_LayoutCashier.cshtml"; // Layout untuk User
             }
 
             return "~/Views/Shared/_Layout.cshtml"; // Default layout jika tidak ada peran

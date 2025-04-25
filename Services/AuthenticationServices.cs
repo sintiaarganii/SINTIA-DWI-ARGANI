@@ -6,6 +6,8 @@ using SINTIA_DWI_ARGANI.Models;
 using static SINTIA_DWI_ARGANI.Models.GeneralStatus;
 using SINTIA_DWI_ARGANI.Models.DTO;
 using SINTIA_DWI_ARGANI.Models.DB;
+using iText.Commons.Actions.Contexts;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace SINTIA_DWI_ARGANI.Services
 {
@@ -38,7 +40,7 @@ namespace SINTIA_DWI_ARGANI.Services
                     Username = registerDTO.Username,
                     Salt = salt,
                     PasswordHash = Hasher.ComputeHash(registerDTO.Password, salt, _paper, Convert.ToInt32(_iteration)),
-                    Role= "Cashier", // Default role
+                    Role = "Cashier", // Default role
                     CreatedAt = DateTime.UtcNow,
                     CashierStatus = GeneralStatus.GeneralStatusData.published
                 };
@@ -58,6 +60,32 @@ namespace SINTIA_DWI_ARGANI.Services
                 throw; // Lempar kembali exception untuk ditangani pemanggil
             }
         }
+
+        //public async Task<bool> Register(RegistCashierDTO registerDTO)
+        //{
+        //    try
+        //    {
+        //        // Hash password
+        //        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDTO.Password);
+
+        //        var newUser = new Auth
+        //        {
+        //            Username = registerDTO.Username,
+        //            Password = hashedPassword,
+        //            Name = registerDTO.Name,
+        //            Role = "Cashier"
+        //        };
+
+        //        _context.Auth.Add(newUser);
+        //        await _context.SaveChangesAsync(); // Pastikan ini ada
+
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public async Task<(bool Success, string Role, int UserId)> Login(CashierAccessDTO loginDTO)
         {

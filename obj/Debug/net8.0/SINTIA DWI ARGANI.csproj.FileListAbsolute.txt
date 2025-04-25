@@ -242,3 +242,21 @@ C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\Microsoft.IO
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\obj\Debug\net8.0\SINTIA DWI ARGANI.sourcelink.json
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.barcodes.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.bouncy-castle-connector.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.forms.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.io.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.kernel.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.layout.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.pdfa.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.pdfua.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.sign.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.styledxmlparser.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.svg.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\itext.commons.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\obj\Debug\net8.0\SINTIA DWI ARGANI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\BCrypt.Net-Next.dll

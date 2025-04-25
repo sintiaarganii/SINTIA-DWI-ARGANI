@@ -57,20 +57,55 @@ namespace SINTIA_DWI_ARGANI.Services
 
             return product;
         }
+        /* public bool AddProduct(ProductDTO product)
+         {
+             var data = new Product();
+             data.NameProduct = product.NameProduct;
+             data.Description = product.Description;
+             data.Stock = product.Stock;
+             data.Price = product.Price;
+             data.StatusProduct = product.StatusProduct;
+             data.IdCategori = product.IdCategori;
+
+             _context.Add(data);
+             _context.SaveChanges();
+             return true;
+         }
+         public bool EditProduct(ProductDTO product)
+         {
+             var data = _context.Products.FirstOrDefault(x => x.Id == product.Id);
+             if (data == null)
+             {
+                 return false;
+             }
+
+             data.NameProduct = product.NameProduct;
+             data.Stock = product.Stock;
+             data.Description = product.Description;
+             data.Price = product.Price;
+             data.StatusProduct = product.StatusProduct;
+
+             _context.Products.Update(data);
+             _context.SaveChanges();
+             return true;
+         }*/
         public bool AddProduct(ProductDTO product)
         {
-            var data = new Product();
-            data.NameProduct = product.NameProduct;
-            data.Description = product.Description;
-            data.Stock = product.Stock;
-            data.Price = product.Price;
-            data.StatusProduct = product.StatusProduct;
-            data.IdCategori = product.IdCategori;
+            var data = new Product
+            {
+                NameProduct = product.NameProduct,
+                Description = product.Description,
+                Stock = product.Stock,
+                Price = product.Price,
+                StatusProduct = product.StatusProduct,
+                IdCategori = product.IdCategori
+            };
 
             _context.Add(data);
             _context.SaveChanges();
             return true;
         }
+
         public bool EditProduct(ProductDTO product)
         {
             var data = _context.Products.FirstOrDefault(x => x.Id == product.Id);
