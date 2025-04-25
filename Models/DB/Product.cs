@@ -14,7 +14,7 @@ namespace SINTIA_DWI_ARGANI.Models.DB
 
         [Required(ErrorMessage = "Price is required.")]
         [Range(1, int.MaxValue, ErrorMessage = "Price must be greater than 0.")]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required(ErrorMessage = "Stock is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Stock must be greater than or equal to 0.")]
@@ -31,6 +31,6 @@ namespace SINTIA_DWI_ARGANI.Models.DB
         [Required(ErrorMessage = "Status is required.")]
         public GeneralStatusData StatusProduct { get; set; }
 
-        public ICollection<Order> Orderings { get; set; }
+        public ICollection<OrderDetail> Orderings { get; set; }
     }
 }

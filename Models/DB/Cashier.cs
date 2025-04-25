@@ -24,7 +24,7 @@ namespace SINTIA_DWI_ARGANI.Models.DB
 
         [Required(ErrorMessage = "Role is required.")]
         [RegularExpression("^(Admin|User)$", ErrorMessage = "Role must be either 'Admin' or 'User'.")]
-        public string Role { get; set; }
+        public string Role { get; set; } = "Cashier";
 
         [Required(ErrorMessage = "Status is required.")]
         public GeneralStatusData CashierStatus { get; set; }

@@ -5,15 +5,134 @@
     ViewData["Title"] = "Product";
 }
 
-<main id="main" class="main">
+<style>
+    /* Pastikan body tidak memiliki padding/margin yang mengganggu */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f6f9ff; /* Warna latar belakang sesuai tema NiceAdmin */
+    }
 
+    /* Container utama */
+    .main {
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Sesuaikan margin saat sidebar collapse */
+    .sidebar-collapsed .main {
+        margin-left: 80px; /* Sesuaikan dengan lebar sidebar saat collapse */
+    }
+
+    /* Card untuk tabel */
+    .card {
+        border: none;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Judul */
+    .card-title {
+        font-weight: 600;
+        color: #012970; /* Warna biru tua dari tema NiceAdmin */
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+    }
+
+    /* Tombol "Tambah Produk Baru" */
+    .btn-primary {
+        background: #4154f1; /* Warna biru dari tema NiceAdmin */
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+        color: #fff;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background: #3345c1;
+        transform: translateY(-2px);
+    }
+
+    /* Tombol aksi (Edit/Delete) */
+    .btn-action {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-edit {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .btn-edit:hover {
+        background: #218838;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+    }
+
+    /* Tabel */
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table thead th {
+        background: #4154f1; /* Warna header tabel sesuai tema NiceAdmin */
+        color: #fff;
+        font-weight: 500;
+        padding: 15px;
+        text-align: left;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: background 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #f6f9ff;
+    }
+
+    .table tbody td {
+        padding: 15px;
+        color: #444444;
+        border-bottom: 1px solid #ebedf3;
+    }
+
+    /* Pesan jika tidak ada data */
+    .text-center {
+        color: #777;
+        font-style: italic;
+    }
+</style>
+
+<main id="main" class="main">
     <div class="pagetitle">
         <h1>Product List</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Data</li>
+                <li class="breadcrumb-item active">Product</li>
             </ol>
         </nav>
     </div>
@@ -21,7 +140,6 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Products</h5>
@@ -36,30 +154,89 @@
                                     <th>Description</th>
                                     <th>Category</th>
                                     <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var data in Model)
+                                @if (Model == null || !Model.Any())
                                 {
                                     <tr>
-                                        <td>@data.Id</td>
-                                        <td>@data.NameProduct</td>
-                                        <td>@data.Price</td>
-                                        <td>@data.Stock</td>
-                                        <td>@data.Description</td>
-                                        <td>@data.CategoriName</td>
-                                        <td>@data.StatusProduct</td>
-                                        <td class="d-flex gap-2">
+                                        <td colspan="8" class="text-center">Belum ada produk.</td>
                                     </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var data in Model)
+                                    {
+                                        <tr>
+                                            <td>@data.Id</td>
+                                            <td>@data.NameProduct</td>
+                                            <td>Rp @data.Price.ToString("N2")</td>
+                                            <td>@data.Stock</td>
+                                            <td>@(data.Description ?? "-")</td>
+                                            <td>@(data.CategoriName ?? "-")</td>
+                                            <td>@data.StatusProduct</td>
+                                            
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
 </main>
+
+@section Scripts {
+    <!-- Pastikan DataTables sudah di-include di layout NiceAdmin -->
+    <script>
+        $(document).ready(function () {
+            // Inisialisasi DataTables
+            $('.datatable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true
+            });
+        });
+
+        // Deteksi perubahan status sidebar NiceAdmin
+        document.addEventListener('DOMContentLoaded', function () {
+            const body = document.body;
+            const contentWrapper = document.querySelector('.main');
+
+            // Fungsi untuk menyesuaikan lebar konten
+            function adjustContentWidth() {
+                if (body.classList.contains('sidebar-collapsed')) {
+                    contentWrapper.classList.add('sidebar-collapsed');
+                } else {
+                    contentWrapper.classList.remove('sidebar-collapsed');
+                }
+            }
+
+            // Jalankan saat halaman dimuat
+            adjustContentWidth();
+
+            // Deteksi perubahan status sidebar
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.attributeName === 'class') {
+                        adjustContentWidth();
+                    }
+                });
+            });
+
+            observer.observe(body, { attributes: true });
+
+            // Deteksi klik pada toggler sidebar
+            const sidebarToggler = document.querySelector('.toggle-sidebar-btn');
+            if (sidebarToggler) {
+                sidebarToggler.addEventListener('click', adjustContentWidth);
+            }
+        });
+    </script>
+}

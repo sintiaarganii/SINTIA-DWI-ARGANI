@@ -1,81 +1,213 @@
-﻿﻿@* INI CODINGAN BRU DITAMBAHKAN PADA TGL 23*@
-@using SINTIA_DWI_ARGANI.Models.DB
+﻿@using SINTIA_DWI_ARGANI.Models.DB
 @using SINTIA_DWI_ARGANI.Models.DTO
 @model List<RegistCashierDTO>
 
 @{
-    ViewData["Title"] = "Cashier";
+    ViewData["Title"] = "Cashier Data";
+    // Layout = "~/Views/Shared/_LayoutCashier.cshtml";
 }
 
+<style>
+    .main {
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 60px);
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        position: relative;
+        backdrop-filter: blur(10px);
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .table-icon {
+        background: #4f46e5;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .table-icon i {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #2d3748;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-body p {
+        color: #718096;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .card-body p a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .card-body p a:hover {
+        text-decoration: underline;
+    }
+
+    .table-responsive {
+        border-radius: 10px;
+        overflow-x: auto;
+    }
+
+    .table {
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .table thead {
+        background: #4f46e5;
+    }
+
+    .table th {
+        color: white;
+        font-weight: 500;
+        padding: 1rem;
+        border-bottom: 2px solid #e2e8f0;
+        text-align: center;
+    }
+
+    .table td {
+        padding: 1rem;
+        color: #4a5568;
+        vertical-align: middle;
+        border-bottom: 1px solid #e2e8f0;
+        text-align: center;
+    }
+
+    .table tbody tr {
+        transition: background 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #f7fafc;
+    }
+
+    .btn-info {
+        background: #4f46e5;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        color: white;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-info:hover {
+        background: #4338ca;
+        transform: translateY(-2px);
+    }
+
+    .btn-danger {
+        background: #e53e3e;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        color: white;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-danger:hover {
+        background: #c53030;
+        transform: translateY(-2px);
+    }
+
+    
+</style>
+
 <main id="main" class="main">
+    <div class="card">
+        <div class="table-icon">
+            <i class="bi bi-table"></i>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Cashier Data</h5>
+            <p>View and manage cashier accounts using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Explore <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>
 
-    <div class="pagetitle">
-        <h1>Data Tables</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Data</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Datatables</h5>
-                        <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>
-
-
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
-                                @* ================ INI YANG DIUBAH TGl 23 ======================*@
-                                <tr>
-                                    <th>
-                                        <b>N</b>ame
-                                    </th>
-                                    <th>Username</th>
-                                    @* <th>Email</th> *@
-                                    <th>Password</th>
-                                    <th>Confirm Password</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                    @* <th data-type="date" data-format="YYYY/DD/MM">Start Date</th> *@
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var data in Model)
-                                {
-                                    <tr>
-                                        <td>@data.Name</td>
-                                        <td>@data.Username</td>
-                                         @* <td>@data.Email</td> *@
-                                        <td>@data.Password</td>
-                                        <td>@data.ConfirmPassword</td>
-                                        <td>@data.CashierStatus</td>
-                                        <td>
-                                            <!-- Action buttons column -->
-                                            <a href="@Url.Action("EditCashier", "Authentication", new { id = data.Id })" class="btn btn-sm btn-info">Update</a>
-                                            <form method="post" action="@Url.Action("Delete", "Authentication")" style="display:inline">
-                                                <input type="hidden" name="id" value="@data.Id" />
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?');">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <!-- End Table with stripped rows -->
-
-                    </div>
-                </div>
-
+            <div class="table-responsive">
+                <table class="table datatable">
+                    <thead>
+                        <tr>
+                            <th><b>N</b>ame</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Confirm Password</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>@data.Name</td>
+                                <td>@data.Username</td>
+                                <td>@data.Password</td>
+                                <td>@data.ConfirmPassword</td>
+                                <td>@data.CashierStatus</td>
+                                <td>
+                                    <a href="@Url.Action("EditCashier", "Authentication", new { id = data.Id })" class="btn btn-sm btn-info me-2">Update</a>
+                                    <form method="post" action="@Url.Action("Delete", "Authentication")" style="display:inline">
+                                        <input type="hidden" name="id" value="@data.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?');">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
+    </div>
+</main>
 
-</main><!-- End #main -->
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const datatables = document.querySelectorAll('.datatable');
+            datatables.forEach(datatable => {
+                new simpleDatatables.DataTable(datatable, {
+                    searchable: true,
+                    fixedHeight: true,
+                    perPage: 10,
+                    perPageSelect: [5, 10, 15, 20],
+                    labels: {
+                        placeholder: "Search cashiers...",
+                        perPage: "{select} entries per page",
+                        noRows: "No cashiers found",
+                        info: "Showing {start} to {end} of {rows} cashiers"
+                    }
+                });
+            });
+        });
+    </script>
+}

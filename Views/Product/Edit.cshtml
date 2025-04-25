@@ -1,5 +1,5 @@
-﻿@using SINTIA_DWI_ARGANI.Models.DB
-@model Product
+﻿@using SINTIA_DWI_ARGANI.Models.DTO
+@model ProductDTO
 
 @{
     ViewData["Title"] = Model.Id == 0 ? "Add Product" : "Edit Product";
@@ -30,6 +30,7 @@
                             <div class="col-md-6">
                                 <label for="NameProduct" class="form-label">Product Name</label>
                                 <input type="text" class="form-control" id="NameProduct" asp-for="NameProduct" required>
+                                <span asp-validation-for="NameProduct" class="text-danger"></span>
                                 <div class="invalid-feedback">Please enter product name.</div>
                             </div>
 
@@ -38,6 +39,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text">Rp</span>
                                     <input type="number" class="form-control" id="Price" asp-for="Price" required>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
                                     <div class="invalid-feedback">Please enter valid price.</div>
                                 </div>
                             </div>
@@ -45,6 +47,7 @@
                             <div class="col-md-6">
                                 <label for="Stock" class="form-label">Stock</label>
                                 <input type="number" class="form-control" id="Stock" asp-for="Stock" required>
+                                <span asp-validation-for="Stock" class="text-danger"></span>
                                 <div class="invalid-feedback">Please enter stock quantity.</div>
                             </div>
 
@@ -53,12 +56,14 @@
                                 <select class="form-select" asp-for="IdCategori" asp-items="ViewBag.Categori" required>
                                     <option value="">-- Select Category --</option>
                                 </select>
+                                <span asp-validation-for="IdCategori" class="text-danger"></span>
                                 <div class="invalid-feedback">Please select a category.</div>
                             </div>
 
                             <div class="col-12">
                                 <label for="Description" class="form-label">Description</label>
                                 <textarea class="form-control" id="Description" asp-for="Description" rows="3"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6">
@@ -67,6 +72,7 @@
                                     <option value="0">Published</option>
                                     <option value="1">Unpublished</option>
                                 </select>
+                                <span asp-validation-for="StatusProduct" class="text-danger"></span>
                             </div>
 
                             <div class="text-center mt-4">
@@ -84,3 +90,9 @@
         </div>
     </section>
 </main>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

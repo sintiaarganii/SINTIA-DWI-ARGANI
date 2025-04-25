@@ -85,14 +85,12 @@ namespace SINTIA_DWI_ARGANI.Controllers
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                // 2. Set Session Variables
                 HttpContext.Session.SetString("Username", cashier.Username);
                 HttpContext.Session.SetString("Name", cashier.Name);
                 HttpContext.Session.SetString("Role", cashier.Role);
                 HttpContext.Session.SetInt32("UserId", cashier.Id);
                 HttpContext.Session.SetString("IsLoggedIn", "true");
 
-                // Redirect berdasarkan peran
                 if (role == "Admin")
                 {
                     return RedirectToAction("Index", "Dashboard"); // Halaman Admin
@@ -109,13 +107,10 @@ namespace SINTIA_DWI_ARGANI.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            // 1. Clear Authentication Cookie
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // 2. Clear Session
             HttpContext.Session.Clear();
 
-            // 3. Optional: Expire Session Cookie
             Response.Cookies.Append("ASP.NET_SessionId", "", new CookieOptions
             {
                 Expires = DateTime.Now.AddDays(-1)

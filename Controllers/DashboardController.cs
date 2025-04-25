@@ -7,28 +7,25 @@ namespace SINTIA_DWI_ARGANI.Controllers
     [AuthorizeRole("Admin")]
     public class DashboardController : BaseController
     {
-        // GET: DashboardController
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            // Mengakses data dari session
-            ViewBag.Username = HttpContext.Session.GetString("Username");
-            ViewBag.Role = HttpContext.Session.GetString("Role");
+            if (HttpContext.Session.GetString("IsLoggedIn") != "true")
+            {
+                return RedirectToAction("LoginCashier", "Authentication");
+            }
             return View();
         }
 
-        // GET: DashboardController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: DashboardController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: DashboardController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,14 +39,11 @@ namespace SINTIA_DWI_ARGANI.Controllers
                 return View();
             }
         }
-
-        // GET: DashboardController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: DashboardController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -64,13 +58,11 @@ namespace SINTIA_DWI_ARGANI.Controllers
             }
         }
 
-        // GET: DashboardController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: DashboardController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

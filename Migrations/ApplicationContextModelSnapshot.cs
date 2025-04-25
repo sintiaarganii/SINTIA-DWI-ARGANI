@@ -67,11 +67,11 @@ namespace SINTIA_DWI_ARGANI.Migrations
                         {
                             Id = 1,
                             CashierStatus = 0,
-                            CreatedAt = new DateTime(2025, 4, 21, 23, 39, 48, 240, DateTimeKind.Utc).AddTicks(2971),
+                            CreatedAt = new DateTime(2025, 4, 25, 15, 57, 29, 196, DateTimeKind.Utc).AddTicks(680),
                             Name = "Administrator",
-                            PasswordHash = "B1Zx1LZB/gpNa9x+0FrI/fDtBefv9IZa9o1kvotjimDVvaROPl6543Ve4sWA4MxbfR4JODdfmGxzHBShnEZMhA==",
+                            PasswordHash = "eo4gayu6NEe1xgkeYlINlj2NV3pZXJe6bwq6Fyj7P5ngQ6yz3spIxe71bENtEBBszwlPB/CbQiOgC9wjzv79vw==",
                             Role = "Admin",
-                            Salt = "bpo2o3xy2cC2qatFXFeKRA==",
+                            Salt = "MP9Q/5ssTFmVl+EAFJ0CCQ==",
                             Username = "admin"
                         });
                 });
@@ -132,7 +132,7 @@ namespace SINTIA_DWI_ARGANI.Migrations
                     b.ToTable("Categoris");
                 });
 
-            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Order", b =>
+            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,11 +140,8 @@ namespace SINTIA_DWI_ARGANI.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CashierId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -152,19 +149,39 @@ namespace SINTIA_DWI_ARGANI.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusOrders")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
+                    b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CashierId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Ordering");
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Ordering", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Product", b =>
@@ -188,8 +205,8 @@ namespace SINTIA_DWI_ARGANI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("StatusProduct")
                         .HasColumnType("int");
@@ -204,11 +221,11 @@ namespace SINTIA_DWI_ARGANI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Order", b =>
+            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.OrderDetail", b =>
                 {
-                    b.HasOne("SINTIA_DWI_ARGANI.Models.DB.Cashier", "Cashier")
-                        .WithMany()
-                        .HasForeignKey("CashierId")
+                    b.HasOne("SINTIA_DWI_ARGANI.Models.DB.Ordering", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -218,7 +235,7 @@ namespace SINTIA_DWI_ARGANI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cashier");
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -237,6 +254,11 @@ namespace SINTIA_DWI_ARGANI.Migrations
             modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Ordering", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("SINTIA_DWI_ARGANI.Models.DB.Product", b =>
