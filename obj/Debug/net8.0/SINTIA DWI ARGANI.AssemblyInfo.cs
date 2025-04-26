@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SINTIA DWI ARGANI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+165680b9c90d7136a2da7e37f7486ac43bb3a501")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+325644b0f107d0dd80f958f3eb428c010b40807a")]
 [assembly: System.Reflection.AssemblyProductAttribute("SINTIA DWI ARGANI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SINTIA DWI ARGANI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
