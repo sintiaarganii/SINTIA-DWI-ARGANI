@@ -118,6 +118,7 @@ builder.Services.AddDbContext<ApplicationContext>(
         .EnableDetailedErrors()
 );
 
+
 // Add services to the container
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();

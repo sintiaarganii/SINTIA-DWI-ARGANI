@@ -259,4 +259,3 @@ C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\Microsoft.Do
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\obj\Debug\net8.0\SINTIA DWI ARGANI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\sintiaargn\source\repos\SINTIA DWI ARGANI\bin\Debug\net8.0\BCrypt.Net-Next.dll

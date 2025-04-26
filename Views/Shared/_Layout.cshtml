@@ -127,13 +127,14 @@
                         <!-- End Profile Image Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                            <li class="dropdown-header">
-                                <h6>@username</h6>
-                                <span>@role</span>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <!-- Profile Initials Circle -->
+                                <div class="profile-initials rounded-circle">
+                                    @GetInitials(User.Identity?.Name)
+                                </div>
+                                <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity?.Name</span>
+                            </a>
 
                             @* <li>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -291,6 +292,24 @@
     <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @functions {
+        string GetInitials(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return "?";
+
+            var parts = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0)
+                return "?";
+
+            // Take the first letter of the first name and, if available, the first letter of the last name
+            string initials = parts[0][0].ToString().ToUpper();
+            if (parts.Length > 1)
+                initials += parts[parts.Length - 1][0].ToString().ToUpper();
+
+            return initials;
+        }
+    }
 </body>
 </html>
 

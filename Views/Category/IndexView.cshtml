@@ -2,7 +2,7 @@
 @model List<CategoryDTO>
 
 @{
-    ViewData["Title"] = "Category";
+    ViewData["Title"] = "Category Management";
 }
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Category List - Admin Portal</title>
+    <title>Category Management - Admin Portal</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -43,10 +43,10 @@
             margin-bottom: 2rem;
         }
 
-        .pagetitle h1 {
-            font-weight: 600;
-            color: #2d3748;
-        }
+            .pagetitle h1 {
+                font-weight: 600;
+                color: #2d3748;
+            }
 
         .breadcrumb {
             background: none;
@@ -58,9 +58,9 @@
             text-decoration: none;
         }
 
-        .breadcrumb-item a:hover {
-            text-decoration: underline;
-        }
+            .breadcrumb-item a:hover {
+                text-decoration: underline;
+            }
 
         .breadcrumb-item.active {
             color: #718096;
@@ -91,10 +91,10 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .category-icon i {
-            color: white;
-            font-size: 1.5rem;
-        }
+            .category-icon i {
+                color: white;
+                font-size: 1.5rem;
+            }
 
         .card-title {
             font-weight: 600;
@@ -107,38 +107,36 @@
             overflow: hidden;
         }
 
-        .table thead {
-            background: #4f46e5;
-            color: white;
+            .table thead {
+                background: #4f46e5;
+                color: white;
+            }
+
+                .table thead th {
+                    font-weight: 500;
+                    padding: 1rem;
+                }
+
+            .table tbody tr {
+                transition: background 0.3s ease;
+            }
+
+                .table tbody tr:hover {
+                    background: #f7fafc;
+                }
+
+            .table tbody td {
+                padding: 1rem;
+                color: #4a5568;
+                vertical-align: middle;
+            }
+
+        .badge.bg-success {
+            background: #10b981 !important;
         }
 
-        .table thead th {
-            font-weight: 500;
-            padding: 1rem;
-        }
-
-        .table tbody tr {
-            transition: background 0.3s ease;
-        }
-
-        .table tbody tr:hover {
-            background: #f7fafc;
-        }
-
-        .table tbody td {
-            padding: 1rem;
-            color: #4a5568;
-            vertical-align: middle;
-        }
-
-        .table tbody td.status-published {
-            color: #10b981;
-            font-weight: 500;
-        }
-
-        .table tbody td.status-unpublished {
-            color: #6b7280;
-            font-weight: 500;
+        .badge.bg-secondary {
+            background: #6b7280 !important;
         }
     </style>
 </head>
@@ -146,12 +144,12 @@
     <main id="main" class="main">
         <div class="pagetitle">
             <div>
-                <h1>Category List</h1>
+                <h1>Category Management</h1>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item">Tables</li>
-                        <li class="breadcrumb-item active">Data</li>
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item">Categories</li>
+                        <li class="breadcrumb-item active">List</li>
                     </ol>
                 </nav>
             </div>
@@ -159,35 +157,41 @@
 
         <section class="section">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
+                <div class="col-12">
+                    <div class="card shadow-sm">
                         <div class="category-icon">
                             <i class="bi bi-tags"></i>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Categories</h5>
+                        <div class="card-body pt-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">Category List</h5>
+                            </div>
 
-                            <table class="table datatable">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Category Name</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var data in Model)
-                                    {
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover datatable w-100">
+                                    <thead>
                                         <tr>
-                                            <td>@data.Id</td>
-                                            <td>@data.CategoriName</td>
-                                            <td class="@(data.StatusCategori == 0 ? "status-published" : "status-unpublished")">
-                                                @(data.StatusCategori == 0 ? "Published" : "Unpublished")
-                                            </td>
+                                            <th style="width: 5%;">ID</th>
+                                            <th>Category Name</th>
+                                            <th>Status</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var category in Model)
+                                        {
+                                            <tr>
+                                                <td>@category.Id</td>
+                                                <td>@category.CategoriName</td>
+                                                <td>
+                                                    <span class="badge @(category.StatusCategori == 0 ? "bg-success" : "bg-secondary")">
+                                                        @(category.StatusCategori == 0 ? "Published" : "Unpublished")
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -204,7 +208,13 @@
     <!-- Initialize DataTable -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            new simpleDatatables.DataTable('.datatable');
+            const datatables = document.querySelectorAll('.datatable');
+            datatables.forEach(datatable => {
+                new simpleDatatables.DataTable(datatable, {
+                    searchable: false, // Disable global search bar
+                    filters: false    // Disable column filters (e.g., Status filter)
+                });
+            });
         });
     </script>
 </body>

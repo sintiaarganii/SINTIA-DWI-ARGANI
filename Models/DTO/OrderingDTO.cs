@@ -4,6 +4,7 @@ namespace SINTIA_DWI_ARGANI.Models.DTO
 {
     public class OrderingDTO
     {
+        public int Id { get; set; }
         public string CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; } 
