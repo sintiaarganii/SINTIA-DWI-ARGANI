@@ -1,3 +1,461 @@
+﻿@*  @using SINTIA_DWI_ARGANI.Models.DTO
+@model CategoryDTO
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add Category" : "Edit Category";
+}
+
+
+
+<html lang="en">
+<head>
+    <meta charset="utf- AscendingNoOpener();
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Add Category - SINTIA_DWI_ARGANI</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="/assets/img/favicon.png" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        .profile-initials {
+            width: 40px;
+            height: 40px;
+            background: #4154f1;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-initials:hover {
+                background: #3345c1;
+            }
+
+        body {
+            background: #F6F0F0;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .main {
+            width: 100%;
+            max-width: 3000px; /* Increased from 2000px to 3000px for wider form */
+        }
+
+        .pagetitle {
+            margin-bottom: 2rem;
+        }
+
+            .pagetitle h1 {
+                font-weight: 600;
+                color: #2d3748;
+            }
+
+        .breadcrumb {
+            background: none;
+            padding: 0;
+        }
+
+        .breadcrumb-item a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+            .breadcrumb-item a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-item.active {
+            color: #718096;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            width: 100%; /* Ensure card uses full container width */
+        }
+
+        .category-icon {
+            background: #4f46e5;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+            .category-icon i {
+                color: white;
+                font-size: 1.5rem;
+            }
+
+        .card-title {
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            background: #f7fafc;
+            color: #4a5568;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%; /* Ensure inputs use full width of their columns */
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #4f46e5;
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                outline: none;
+            }
+
+        .invalid-feedback {
+            font-size: 0.85rem;
+            color: #8F87F1;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+            .btn-primary:hover {
+                background: #4338ca;
+                transform: translateY(-2px);
+            }
+
+            .btn-primary i {
+                margin-right: 0.5rem;
+            }
+
+        .btn-secondary {
+            background: #6b7280;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            font-weight: 500;
+            color: white;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+            .btn-secondary:hover {
+                background: #4b5563;
+                transform: translateY(-2px);
+            }
+
+            .btn-secondary i {
+                margin-right: 0.5rem;
+            }
+
+        .text-center {
+            margin-top: 2rem;
+        }
+
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
+
+            .search-container input {
+                border-radius: 10px;
+                border: 1px solid #e2e8f0;
+                padding: 0.75rem;
+                background: #f7fafc;
+                color: #4a5568;
+                width: 100%;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .search-container input:focus {
+                    border-color: #4f46e5;
+                    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                    outline: none;
+                }
+
+        /* Ensure form fields are spaced appropriately in wider layout */
+        .row.g-3 {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .col-md-12 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="/assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">SINTIA</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle" href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <div class="profile-initials">A</div>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>admin</h6>
+                            <span>Admin</span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/Authentication/Logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/Dashboard">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Product">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Product</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Category">
+                    <i class="bi bi-tags"></i>
+                    <span>Category</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Ordering/Report">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Report Order</span>
+                </a>
+            </li>
+            <li class="nav-heading">Administration</li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Authentication">
+                    <i class="bi bi-people"></i>
+                    <span>User Management</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Add New Category</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Category">Categories</a></li>
+                    <li class="breadcrumb-item active">Add</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="category-icon">
+                            <i class="bi bi-tags"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Category Information</h5>
+                            <form method="post" class="row g-3 needs-validation" novalidate="novalidate" action="/Category/Edit">
+                                <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+                                    <ul><li style="display:none"></li></ul>
+                                </div>
+                                <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Id" name="Id" value="0">
+                                <div class="col-md-12">
+                                    <label for="CategoriName" class="form-label">Category Name</label>
+                                    <input type="text" class="form-control" id="CategoriName" required="" data-val="true" data-val-length="Nama kategori harus antara 3 sampai 10 huruf." data-val-length-max="10" data-val-length-min="3" data-val-regex="Huruf pertama harus kapital, sisanya huruf kecil, tanpa angka atau simbol." data-val-regex-pattern="^[A-Z][a-z]{2,9}$" data-val-required="The CategoriName field is required." name="CategoriName" value="">
+                                    <span class="invalid-feedback field-validation-valid" data-valmsg-for="CategoriName" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="StatusCategori" class="form-label">Status</label>
+                                    <select class="form-select" required="" data-val="true" data-val-required="Status is required." id="StatusCategori" name="StatusCategori">
+                                        <option value="0" selected="selected">Published</option>
+                                        <option value="1">Unpublished</option>
+                                    </select>
+                                    <span class="invalid-feedback field-validation-valid" data-valmsg-for="StatusCategori" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save"></i> Save
+                                    </button>
+                                    <a class="btn btn-secondary" href="/Category">
+                                        <i class="bi bi-x-circle"></i> Cancel
+                                    </a>
+                                </div>
+                                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8BQvxpFfxKFKje9EHewNg8ExgA4aFAJa9gONVszjAjAU7m758W4gn1i5UzX1mSGAQGh2Z9nlcpWantbmQLSv55gAbddC85EhtReMgrP5PmKlgno2GnQLBxcL9WtiInU4WjI0gb4ktX9I08DzPGwpjq4ietQO9rImb6RkDiHf_K4MCig2sX_YJ8cKpefS9wug0w">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="/assets/vendor/quill/quill.js"></script>
+    <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Form Validation and Search Script -->
+    <script>
+        $(document).ready(function () {
+            $('form.needs-validation').validate({
+                rules: {
+                    CategoriName: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 10,
+                        pattern: /^[A-Z][a-z]{2,9}$/
+                    },
+                    StatusCategori: {
+                        required: true
+                    }
+                },
+                messages: {
+                    CategoriName: {
+                        required: "Nama kategori wajib diisi.",
+                        minlength: "Nama kategori minimal 3 huruf.",
+                        maxlength: "Nama kategori maksimal 10 huruf.",
+                        pattern: "Huruf pertama harus kapital, tidak boleh ada angka dan simbol."
+                    },
+                    StatusCategori: {
+                        required: "Status wajib diisi."
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.col-md-12').append(error);
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+
+            $('#searchInput').on('keyup', function () {
+                const searchTerm = $(this).val().toLowerCase();
+                $.ajax({
+                    url: '/Category/Search',
+                    method: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        console.log('Search results:', data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Search error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</body>
+</html> *@
+
+
 ﻿@using SINTIA_DWI_ARGANI.Models.DTO
 @model CategoryDTO
 
@@ -232,7 +690,7 @@
     </main>
 
     <!-- Bootstrap JS -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Validation Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -279,285 +737,3 @@
     </script>
 </body>
 </html>
-
-
-
- @* @using SINTIA_DWI_ARGANI.Models.DTO
-@model CategoryDTO
-
-@{
-    ViewData["Title"] = Model.Id == 0 ? "Add Category" : "Edit Category";
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@(Model.Id == 0 ? "Add Category" : "Edit Category") - Admin Portal</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .main {
-            width: 100%;
-            max-width: 700px;
-        }
-
-        .pagetitle {
-            margin-bottom: 2rem;
-        }
-
-            .pagetitle h1 {
-                font-weight: 600;
-                color: #2d3748;
-            }
-
-        .breadcrumb {
-            background: none;
-            padding: 0;
-        }
-
-        .breadcrumb-item a {
-            color: #4f46e5;
-            text-decoration: none;
-        }
-
-            .breadcrumb-item a:hover {
-                text-decoration: underline;
-            }
-
-        .breadcrumb-item.active {
-            color: #718096;
-        }
-
-        .card {
-            border: none;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .category-icon {
-            background: #4f46e5;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-            .category-icon i {
-                color: white;
-                font-size: 1.5rem;
-            }
-
-        .card-title {
-            font-weight: 600;
-            color: #2d3748;
-            text-align: center;
-            margin-top: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            font-weight: 500;
-            color: #4a5568;
-            font-size: 0.95rem;
-        }
-
-        .form-control, .form-select {
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            padding: 0.75rem;
-            background: #f7fafc;
-            color: #4a5568;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-            .form-control:focus, .form-select:focus {
-                border-color: #4f46e5;
-                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-                outline: none;
-            }
-
-        .invalid-feedback {
-            font-size: 0.85rem;
-            color: #e53e3e;
-        }
-
-        .btn-primary {
-            background: #4f46e5;
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem 2rem;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-            .btn-primary:hover {
-                background: #4338ca;
-                transform: translateY(-2px);
-            }
-
-            .btn-primary i {
-                margin-right: 0.5rem;
-            }
-
-        .btn-secondary {
-            background: #6b7280;
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem 2rem;
-            font-weight: 500;
-            color: white;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-            .btn-secondary:hover {
-                background: #4b5563;
-                transform: translateY(-2px);
-            }
-
-            .btn-secondary i {
-                margin-right: 0.5rem;
-            }
-
-        .text-center {
-            margin-top: 2rem;
-        }
-    </style>
-</head>
-<body>
-    <main id="main" class="main">
-        <div class="pagetitle">
-            <div>
-                <h1>@(Model.Id == 0 ? "Add New Category" : "Edit Category")</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categories</a></li>
-                        <li class="breadcrumb-item active">@(Model.Id == 0 ? "Add" : "Edit")</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="category-icon">
-                            <i class="bi bi-tags"></i>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Category Information</h5>
-
-                            <form asp-controller="Category" asp-action="Edit" method="post" class="row g-3 needs-validation" novalidate>
-                                <div asp-validation-summary="All" class="text-danger"></div>
-                                <input type="hidden" asp-for="Id" />
-
-                                <div class="col-md-12">
-                                    <label for="CategoriName" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control" id="CategoriName" asp-for="CategoriName" required>
-                                    <span asp-validation-for="CategoriName" class="invalid-feedback"></span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="StatusCategori" class="form-label">Status</label>
-                                    <select asp-for="StatusCategori" class="form-select" required>
-                                        <option value="0">Published</option>
-                                        <option value="1">Unpublished</option>
-                                    </select>
-                                    <span asp-validation-for="StatusCategori" class="invalid-feedback"></span>
-                                </div>
-
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="bi bi-save"></i> Save
-                                    </button>
-                                    <a asp-action="Index" class="btn btn-secondary">
-                                        <i class="bi bi-x-circle"></i> Cancel
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('form.needs-validation').validate({
-                rules: {
-                    CategoriName: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 10,
-                        pattern: /^[A-Z][a-zA-Z]{2,9}$/
-                    },
-                    StatusCategori: {
-                        required: true
-                    }
-                },
-                messages: {
-                    CategoriName: {
-                        required: "Nama kategori wajib diisi.",
-                        minlength: "Nama kategori minimal 3 huruf.",
-                        maxlength: "Nama kategori maksimal 10 huruf.",
-                        pattern: "Hanya huruf. Huruf pertama harus kapital, tidak boleh ada angka dan simbol."
-                    },
-                    StatusCategori: {
-                        required: "Status wajib diisi."
-                    }
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.col-md-12').append(error);
-                },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid').addClass('is-valid');
-                }
-            });
-        });
-    </script>
-</body>
-</html> *@

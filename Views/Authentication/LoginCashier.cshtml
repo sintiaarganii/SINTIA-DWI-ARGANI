@@ -165,13 +165,12 @@
     Layout = null;
 }
 
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
     <title>Login - Cashier Portal</title>
     <meta content="Login to your cashier account" name="description">
     <meta content="cashier, login, portal" name="keywords">
@@ -187,90 +186,118 @@
     <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Animate.css for Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <!-- Custom CSS -->
     <style>
         body {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            background: #F6F0F0;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            background: #ffffff;
-            padding: 2rem;
-            transition: transform 0.3s ease;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            padding: 2.5rem; /* Increased padding for wider form */
+            width: 100%;
+            max-width: 600px; /* Increased max-width to make the form wider */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
             .card:hover {
-                transform: translateY(-5px);
+                transform: translateY(-8px);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             }
 
         .card-title {
-            font-weight: 600;
-            color: #2d3748;
+            font-weight: 700;
+            color: #D32F2F; /* Red accent */
             margin-bottom: 0.5rem;
+            font-size: 1.8rem;
         }
 
         .card-body p {
             color: #718096;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-label {
             font-weight: 500;
             color: #4a5568;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .form-control {
-            border-radius: 8px;
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
             .form-control:focus {
-                border-color: #6366f1;
-                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+                border-color: #D32F2F;
+                box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+                background: #fff;
                 outline: none;
             }
 
+                .form-control:focus + .form-label,
+                .form-control:not(:placeholder-shown) + .form-label {
+                    transform: translateY(-2.5rem) scale(0.85);
+                    color: #D32F2F;
+                    background: #fff;
+                    padding: 0 5px;
+                }
+
         .input-group button {
-            border: 1px solid #e2e8f0;
+            border: 2px solid #e2e8f0;
             border-left: none;
             background-color: #f7fafc;
-            border-radius: 0 8px 8px 0;
-            transition: background-color 0.3s ease;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
         }
 
             .input-group button:hover {
-                background-color: #edf2f7;
+                background-color: #FFCDD2; /* Light red accent */
             }
 
             .input-group button i {
                 font-size: 1.2rem;
-                color: #4a5568;
+                color: #D32F2F;
             }
 
         .btn-primary {
-            background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+            background: linear-gradient(90deg, #D32F2F, #FF6B6B);
             border: none;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-weight: 500;
+            border-radius: 10px;
+            padding: 0.85rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
 
             .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+                background: linear-gradient(90deg, #b71c1c, #FF6B6B);
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
             }
 
         .invalid-feedback {
@@ -279,79 +306,89 @@
         }
 
         .small a {
-            color: #6366f1;
+            color: #D32F2F;
             text-decoration: none;
             font-weight: 500;
         }
 
             .small a:hover {
-                color: #4f46e5;
+                color: #b71c1c;
                 text-decoration: underline;
             }
 
         .back-to-top {
-            background: #6366f1;
+            background: #D32F2F;
             color: #fff;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
             .back-to-top:hover {
-                background: #4f46e5;
+                background: #b71c1c;
+                transform: scale(1.1);
             }
+        /* Floating Label Styling */
+        .form-label {
+            position: absolute;
+            top: 0.85rem;
+            left: 1rem;
+            color: #718096;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:placeholder-shown + .form-label {
+            transform: translateY(0);
+        }
     </style>
 </head>
-
 <body>
     <main>
-        <div class="container">
-            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="pt-4 pb-2 text-center">
-                                        <h5 class="card-title fs-4">Login to Your Account</h5>
-                                        <p class="small">Enter your username & password to login</p>
-                                    </div>
-                                    <form class="row g-3 needs-validation" asp-controller="Authentication" asp-action="LoginCashier" method="post" novalidate>
-                                        <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Username</label>
-                                            <input type="text" name="username" asp-for="Username" class="form-control" id="yourUsername" required>
-                                            <div class="invalid-feedback">Please enter a username.</div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Password</label>
-                                            <div class="input-group">
-                                                <input type="password" asp-for="Password" class="form-control" id="yourPassword" required>
-                                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('yourPassword')">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>
-                                            </div>
-                                            <span class="text-danger" asp-validation-for="Password"></span>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="small mb-0">Don't have an account? <a href="@Url.Action("RegisterCashier", "Authentication")">Create an account</a></p>
-                                        </div>
-                                    </form>
-                                </div>
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 d-flex flex-column align-items-center justify-content-center">
+                    <!-- Widened the column further -->
+                    <div class="card mb-3 animate__animated animate__fadeInDown">
+                        <div class="card-body">
+                            <div class="pt-4 pb-2 text-center">
+                                <h5 class="card-title fs-4">Login to Your Account</h5>
+                                <p class="small">Enter your username & password to login</p>
                             </div>
+                            <form class="row g-3 needs-validation" asp-controller="Authentication" asp-action="LoginCashier" method="post" novalidate>
+                                <div class="col-12 form-group animate__animated animate__fadeIn" data-animate-delay="0.2s">
+                                    <input type="text" name="username" asp-for="Username" class="form-control" id="yourUsername" placeholder=" " required>
+                                    <label for="yourUsername" class="form-label">Username</label>
+                                    <div class="invalid-feedback">Please enter a username.</div>
+                                </div>
+
+                                <div class="col-12 form-group animate__animated animate__fadeIn" data-animate-delay="0.4s">
+                                    <div class="input-group">
+                                        <input type="password" asp-for="Password" class="form-control" id="yourPassword" placeholder=" " required>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('yourPassword')">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="Password"></span>
+                                </div>
+
+                                <div class="col-12 animate__animated animate__fadeIn" data-animate-delay="0.6s">
+                                    <button class="btn btn-primary w-100" type="submit">Login</button>
+                                </div>
+                                <div class="col-12 text-center animate__animated animate__fadeIn" data-animate-delay="0.8s">
+                                    <p class="small mb-0">Don't have an account? <a href="@Url.Action("RegisterCashier", "Authentication")">Create an account</a></p>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -371,6 +408,11 @@
             if (successMessage) {
                 alert(successMessage);
             }
+
+            // Apply animation delays
+            document.querySelectorAll('[data-animate-delay]').forEach(el => {
+                el.style.animationDelay = el.getAttribute('data-animate-delay');
+            });
         });
 
         function togglePassword(inputId) {
@@ -389,5 +431,4 @@
         }
     </script>
 </body>
-
 </html>

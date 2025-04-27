@@ -2,137 +2,192 @@
 @model List<ProductDTO>
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Product List";
+    Layout = "~/Views/Shared/_LayoutCashier.cshtml";
 }
 
 <style>
-    /* Pastikan body tidak memiliki padding/margin yang mengganggu */
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Poppins', sans-serif;
-        background: #f6f9ff; /* Warna latar belakang sesuai tema NiceAdmin */
-    }
-
-    /* Container utama */
     .main {
-        padding: 20px;
-        transition: margin-left 0.3s ease;
+        padding: 2rem;
     }
 
-    /* Sesuaikan margin saat sidebar collapse */
-    .sidebar-collapsed .main {
-        margin-left: 80px; /* Sesuaikan dengan lebar sidebar saat collapse */
+    .pagetitle {
+        margin-bottom: 2rem;
     }
 
-    /* Card untuk tabel */
+        .pagetitle h1 {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+    .breadcrumb {
+        background: none;
+        padding: 0;
+    }
+
+    .breadcrumb-item a {
+        color: #A31D1D;
+        text-decoration: none;
+    }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+
+    .breadcrumb-item.active {
+        color: #718096;
+    }
+
     .card {
         border: none;
-        border-radius: 15px;
-        background: #ffffff;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        position: relative;
     }
 
-    /* Judul */
+    .card-icon {
+        background: #A31D1D;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+        .card-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
     .card-title {
         font-weight: 600;
-        color: #012970; /* Warna biru tua dari tema NiceAdmin */
-        margin-bottom: 20px;
-        font-size: 1.5rem;
+        color: #2d3748;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
     }
 
-    /* Tombol "Tambah Produk Baru" */
     .btn-primary {
-        background: #4154f1; /* Warna biru dari tema NiceAdmin */
+        background: #A31D1D;
         border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
         font-weight: 500;
-        color: #fff;
         transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    .btn-primary:hover {
-        background: #3345c1;
-        transform: translateY(-2px);
-    }
+        .btn-primary:hover {
+            background: #8a1919;
+            transform: translateY(-2px);
+        }
 
-    /* Tombol aksi (Edit/Delete) */
-    .btn-action {
-        padding: 8px 12px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        transition: background 0.3s ease;
-    }
+        .btn-primary i {
+            margin-right: 0.5rem;
+        }
 
-    .btn-edit {
-        background: #28a745;
-        color: #fff;
-    }
-
-    .btn-edit:hover {
-        background: #218838;
-    }
-
-    .btn-delete {
-        background: #dc3545;
-        color: #fff;
-    }
-
-    .btn-delete:hover {
-        background: #c82333;
-    }
-
-    /* Tabel */
-    .table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        background: #fff;
+    .table-responsive {
         border-radius: 10px;
-        overflow: hidden;
+        overflow-x: auto;
     }
 
-    .table thead th {
-        background: #4154f1; /* Warna header tabel sesuai tema NiceAdmin */
-        color: #fff;
-        font-weight: 500;
-        padding: 15px;
-        text-align: left;
+    .table {
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+        .table thead {
+            background: #A31D1D;
+        }
+
+        .table th {
+            color: #ffffff;
+            font-weight: 500;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .table td {
+            padding: 1rem;
+            color: #4a5568;
+            vertical-align: middle;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background: #f7fafc;
+            }
+
+    .badge.bg-success {
+        background: #10b981 !important;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+    }
+
+    .badge.bg-secondary {
+        background: #6b7280 !important;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+    }
+
+    .btn-group .btn {
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning {
+        background: #f59e0b;
         border: none;
+        color: white;
     }
 
-    .table tbody tr {
-        transition: background 0.3s ease;
+        .btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+    .btn-danger {
+        background: #e53e3e;
+        border: none;
+        color: white;
     }
 
-    .table tbody tr:hover {
-        background: #f6f9ff;
-    }
+        .btn-danger:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
 
-    .table tbody td {
-        padding: 15px;
-        color: #444444;
-        border-bottom: 1px solid #ebedf3;
-    }
-
-    /* Pesan jika tidak ada data */
-    .text-center {
-        color: #777;
-        font-style: italic;
+    .btn i {
+        margin-right: 0.3rem;
     }
 </style>
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Product List</h1>
+        <h1>Product Management</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Product</li>
+                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
         </nav>
     </div>
@@ -141,46 +196,53 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+                    <div class="card-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Products</h5>
+                        <h5 class="card-title">Product List</h5>
 
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model == null || !Model.Any())
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover datatable">
+                                <thead>
                                     <tr>
-                                        <td colspan="8" class="text-center">Belum ada produk.</td>
+                                        <th>ID</th>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
                                     </tr>
-                                }
-                                else
-                                {
-                                    @foreach (var data in Model)
+                                </thead>
+                                <tbody>
+                                    @foreach (var product in Model.Where(p => p.StatusProduct != GeneralStatus.GeneralStatusData.deleted))
                                     {
                                         <tr>
-                                            <td>@data.Id</td>
-                                            <td>@data.NameProduct</td>
-                                            <td>Rp @data.Price.ToString("N2")</td>
-                                            <td>@data.Stock</td>
-                                            <td>@(data.Description ?? "-")</td>
-                                            <td>@(data.CategoriName ?? "-")</td>
-                                            <td>@data.StatusProduct</td>
+                                            <td>@product.Id</td>
+                                            <td>@product.NameProduct</td>
+                                            <td>@product.Price.ToString("C", new System.Globalization.CultureInfo("id-ID"))</td>
+                                            <td>@product.Stock</td>
+                                            <td>@product.CategoriName</td>
+                                            <td>
+                                                @if ((GeneralStatus.GeneralStatusData)product.CategoryStatus != GeneralStatus.GeneralStatusData.published)
+                                                {
+                                                    <span class="badge bg-secondary" data-bs-toggle="tooltip"
+                                                          title="Product unpublished because category is @((GeneralStatus.GeneralStatusData)product.CategoryStatus)">
+                                                        Unpublished (Category @((GeneralStatus.GeneralStatusData)product.CategoryStatus))
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge @(product.StatusProduct == GeneralStatus.GeneralStatusData.published ? "bg-success" : "bg-secondary")">
+                                                        @product.StatusProduct
+                                                    </span>
+                                                }
+                                            </td>
                                         </tr>
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,54 +250,22 @@
     </section>
 </main>
 
+<!-- Load jQuery sebelum DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 @section Scripts {
-    <!-- Pastikan DataTables sudah di-include di layout NiceAdmin -->
     <script>
         $(document).ready(function () {
-            // Inisialisasi DataTables
             $('.datatable').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true
+                responsive: true,
+                searching: true, // Disable search bar
+                lengthChange: true, // Disable "Show entries" dropdown
+                paging: true, // Disable pagination (Previous/Next buttons)
+                info: true, // Disable info text (Showing _START_ to _END_ of _TOTAL_ entries)
+                dom: 'rt' // Only render the table (t) and responsive behavior (r), no other UI elements
             });
-        });
-
-        // Deteksi perubahan status sidebar NiceAdmin
-        document.addEventListener('DOMContentLoaded', function () {
-            const body = document.body;
-            const contentWrapper = document.querySelector('.main');
-
-            // Fungsi untuk menyesuaikan lebar konten
-            function adjustContentWidth() {
-                if (body.classList.contains('sidebar-collapsed')) {
-                    contentWrapper.classList.add('sidebar-collapsed');
-                } else {
-                    contentWrapper.classList.remove('sidebar-collapsed');
-                }
-            }
-
-            // Jalankan saat halaman dimuat
-            adjustContentWidth();
-
-            // Deteksi perubahan status sidebar
-            const observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.attributeName === 'class') {
-                        adjustContentWidth();
-                    }
-                });
-            });
-
-            observer.observe(body, { attributes: true });
-
-            // Deteksi klik pada toggler sidebar
-            const sidebarToggler = document.querySelector('.toggle-sidebar-btn');
-            if (sidebarToggler) {
-                sidebarToggler.addEventListener('click', adjustContentWidth);
-            }
         });
     </script>
 }

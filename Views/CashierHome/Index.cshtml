@@ -161,192 +161,53 @@
 
 
 @{
-    ViewData["Title"] = "Cashier Admin Dashboard";
+    ViewData["Title"] = "E-Commerce User Dashboard";
     Layout = "~/Views/Shared/_LayoutCashier.cshtml";
 }
 
-<!-- Include required CSS and JS libraries -->
+<!-- Include Animate.css and Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.min.js"></script>
 
-<main id="main" class="main">
-    <div class="pagetitle animate__animated animate__fadeInDown">
-        <h1><i class="fas fa-tachometer-alt me-2"></i>Cashier Admin Dashboard</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Dashboard")">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-        </nav>
-    </div>
-
-    <section class="section dashboard">
-        <div class="row">
-            <!-- Left Side: Statistics and Charts -->
-            <div class="col-lg-8">
-                <div class="row">
-                    <!-- Total Sales -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card animate__animated animate__zoomIn" data-animate-delay="0.2s">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="sales">Today</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="sales">This Month</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="sales">This Year</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Total Sales <span id="sales-filter">| Today</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-dollar-sign"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6 id="sales-amount">$0</h6>
-                                        <span id="sales-change" class="text-success small pt-1 fw-bold">0%</span>
-                                        <span class="text-muted small pt-2 ps-1">change</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Total Orders -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card orders-card animate__animated animate__zoomIn" data-animate-delay="0.4s">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="orders">Today</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="orders">This Month</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="orders">This Year</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Total Orders <span id="orders-filter">| Today</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-cart-check"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6 id="orders-count">0</h6>
-                                        <span id="orders-change" class="text-success small pt-1 fw-bold">0%</span>
-                                        <span class="text-muted small pt-2 ps-1">change</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Total Products -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card products-card animate__animated animate__zoomIn" data-animate-delay="0.6s">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="products">Today</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="products">This Month</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="products">This Year</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Total Products Sold <span id="products-filter">| Today</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-box-open"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6 id="products-count">0</h6>
-                                        <span id="products-change" class="text-success small pt-1 fw-bold">0%</span>
-                                        <span class="text-muted small pt-2 ps-1">change</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sales Overview Chart -->
-                    <div class="col-12">
-                        <div class="card animate__animated animate__fadeInUp">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="sales-chart">Today</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="sales-chart">This Month</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="sales-chart">This Year</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Sales Overview <span id="sales-chart-filter">| Today</span></h5>
-                                <canvas id="salesChart" style="max-height: 400px;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Top Selling Products -->
-                    <div class="col-12">
-                        <div class="card top-selling overflow-auto animate__animated animate__fadeInUp">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="top-selling">Today</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="top-selling">This Month</a></li>
-                                    <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="top-selling">This Year</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">Top Selling Products <span id="top-selling-filter">| Today</span></h5>
-                                <table class="table table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Preview</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Sold</th>
-                                            <th scope="col">Revenue</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="top-selling-table">
-                                        <!-- Populated via AJAX -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<main id="main" class="main" style="background-color: #F6F0F0;">
+    <div class="container">
+        <div class="pagetitle animate__animated animate__bounceInDown">
+            <h1><i class="fas fa-store me-2"></i>Welcome to Your Shopping Dashboard</h1>
+        </div>
+        <div class="dashboard">
+            <!-- Products -->
+            <div class="card animate__animated animate__zoomIn" data-animate-delay="0.2s">
+                <i class="fas fa-box-open"></i>
+                <h3>Products</h3>
+                <p>Browse our wide range of products</p>
+                <a href="/Product/IndexView" class="btn">View Products</a>
             </div>
 
-            <!-- Right Side: Recent Activity -->
-            <div class="col-lg-4">
-                <!-- Recent Orders -->
-                <div class="card animate__animated animate__fadeInRight">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start"><h6>Filter</h6></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="today" data-card="recent-orders">Today</a></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="month" data-card="recent-orders">This Month</a></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="year" data-card="recent-orders">This Year</a></li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Recent Orders <span id="recent-orders-filter">| Today</span></h5>
-                        <div class="activity" id="recent-orders-list">
-                            <!-- Populated via AJAX -->
-                        </div>
-                    </div>
-                </div>
+            <!-- Categories -->
+            <div class="card animate__animated animate__zoomIn" data-animate-delay="0.4s">
+                <i class="fas fa-tags"></i>
+                <h3>Categories</h3>
+                <p>Explore products by category</p>
+                <a href="/Category/IndexView" class="btn">Browse Categories</a>
+            </div>
+
+            <!-- Ordering -->
+            <div class="card animate__animated animate__zoomIn" data-animate-delay="0.6s">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Ordering</h3>
+                <p>Place or track your orders</p>
+                <a href="/Ordering/Index" class="btn">Manage Orders</a>
+            </div>
+
+            <!-- About -->
+            <div class="card animate__animated animate__zoomIn" data-animate-delay="0.8s">
+                <i class="fas fa-info-circle"></i>
+                <h3>About Us</h3>
+                <p>Learn more about our store</p>
+                <a href="@Url.Action("Index", "About")" class="btn">Read More</a>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 
 @section Scripts {
@@ -356,132 +217,92 @@
             document.querySelectorAll('[data-animate-delay]').forEach(el => {
                 el.style.animationDelay = el.getAttribute('data-animate-delay');
             });
-
-            // Initialize Sales Chart
-            const salesChart = new Chart(document.getElementById('salesChart'), {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Sales',
-                        data: [],
-                        borderColor: '#4154f1',
-                        fill: true,
-                        backgroundColor: 'rgba(65, 84, 241, 0.2)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: 'Sales Overview' }
-                    },
-                    scales: {
-                        x: { display: true, title: { display: true, text: 'Date' } },
-                        y: { display: true, title: { display: true, text: 'Sales ($)' } }
-                    }
-                }
-            });
-
-            // Function to fetch dashboard data
-            function fetchDashboardData(filter, card) {
-                $.ajax({
-                    url: '@Url.Action("GetDashboardData", "Ordering")',
-                    type: 'GET',
-                    data: { filter: filter, card: card },
-                    success: function (data) {
-                        if (card === 'sales') {
-                            $('#sales-amount').text(`$${data.salesAmount.toLocaleString()}`);
-                            $('#sales-change').text(data.salesChange + '%').removeClass().addClass(data.salesChange >= 0 ? 'text-success' : 'text-danger');
-                            $('#sales-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        } else if (card === 'orders') {
-                            $('#orders-count').text(data.ordersCount);
-                            $('#orders-change').text(data.ordersChange + '%').removeClass().addClass(data.ordersChange >= 0 ? 'text-success' : 'text-danger');
-                            $('#orders-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        } else if (card === 'products') {
-                            $('#products-count').text(data.productsCount);
-                            $('#products-change').text(data.productsChange + '%').removeClass().addClass(data.productsChange >= 0 ? 'text-success' : 'text-danger');
-                            $('#products-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        } else if (card === 'sales-chart') {
-                            salesChart.data.labels = data.chartLabels;
-                            salesChart.data.datasets[0].data = data.chartData;
-                            salesChart.update();
-                            $('#sales-chart-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        } else if (card === 'recent-orders') {
-                            $('#recent-orders-list').html(data.recentOrdersHtml);
-                            $('#recent-orders-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        } else if (card === 'top-selling') {
-                            $('#top-selling-table').html(data.topSellingHtml);
-                            $('#top-selling-filter').text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                        }
-                        // Reapply animations
-                        $(`.${card}-card, .card:has(#${card}-filter)`).addClass('animate__animated animate__pulse').on('animationend', function () {
-                            $(this).removeClass('animate__animated animate__pulse');
-                        });
-                    },
-                    error: function (xhr) {
-                        console.error('Error fetching data:', xhr.responseText);
-                    }
-                });
-            }
-
-            // Handle filter dropdown clicks
-            $('.filter-option').on('click', function (e) {
-                e.preventDefault();
-                const filter = $(this).data('filter');
-                const card = $(this).data('card');
-                fetchDashboardData(filter, card);
-            });
-
-            // Initial data load
-            fetchDashboardData('today', 'sales');
-            fetchDashboardData('today', 'orders');
-            fetchDashboardData('today', 'products');
-            fetchDashboardData('today', 'sales-chart');
-            fetchDashboardData('today', 'recent-orders');
-            fetchDashboardData('today', 'top-selling');
         });
     </script>
 }
 
 <style>
-    .card-icon {
-        background: #f6f9ff;
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        color: #4154f1;
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
     }
 
-    .info-card h6 {
-        font-size: 28px;
-        color: #012970;
+    .pagetitle {
+        text-align: center;
+        padding: 20px 0;
+        background: #F6F0F0;
+        border-bottom: 3px solid #D32F2F; /* Red accent from the image */
+        margin-bottom: 20px;
+        border-radius: 10px;
     }
 
-    .card-title {
-        font-size: 18px;
-        font-weight: 500;
-        color: #012970;
+        .pagetitle h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #D32F2F; /* Red color */
+        }
+
+    .dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
     }
 
-    .filter .icon {
-        color: #bbb;
+    .card {
+        background: #F6F0F0;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        width: 300px;
+        padding: 25px;
+        text-align: center;
+        border: 2px solid #FFCDD2; /* Light red border */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .activity .activity-item .activite-label {
-        font-size: 12px;
-        color: #888;
-        min-width: 80px;
-    }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-    .activity .activity-badge {
-        font-size: 10px;
-        margin-right: 10px;
-    }
+        .card i {
+            font-size: 3.5em;
+            color: #D32F2F; /* Red color */
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
 
-    .top-selling img {
-        border-radius: 5px;
-    }
+        .card:hover i {
+            color: #b71c1c; /* Darker red on hover */
+        }
+
+        .card h3 {
+            font-size: 1.6em;
+            margin: 10px 0;
+            color: #D32F2F;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .card .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #D32F2F;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+            .card .btn:hover {
+                background-color: #b71c1c;
+                transform: scale(1.05);
+            }
 </style>
-```

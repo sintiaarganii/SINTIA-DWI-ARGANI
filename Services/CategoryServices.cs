@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using SINTIA_DWI_ARGANI.Interfaces;
 using SINTIA_DWI_ARGANI.Models;
 using SINTIA_DWI_ARGANI.Models.DB;
@@ -11,6 +12,7 @@ namespace UITraining.Services
     public class CategoryServices : ICategory
     {
         private readonly ApplicationContext _context;
+        private readonly GeneralStatusData newStatus;
 
         public CategoryServices(ApplicationContext context)
         {
@@ -80,6 +82,24 @@ namespace UITraining.Services
             _context.SaveChanges();
 
             return true;
+            //    var category = _context.Categoris
+            //.Include(c => c.Products)
+            //.FirstOrDefault(c => c.Id == CategiriDTO.Id);
+
+            //    if (category == null) return false;
+
+            //    category.StatusCategori = newStatus;
+
+            //    // If category is being unpublished or deleted, unpublish all its products
+            //    if (newStatus != GeneralStatusData.published)
+            //    {
+            //        foreach (var product in category.Products)
+            //        {
+            //            product.StatusProduct = GeneralStatusData.unpublished;
+            //        }
+            //    }
+
+            //    return _context.SaveChanges() > 0;
         }
         public bool DeleteCategori(int Id)
         {

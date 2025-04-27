@@ -1,13 +1,14 @@
-﻿@using SINTIA_DWI_ARGANI.Models.DTO
+﻿@* @using SINTIA_DWI_ARGANI.Models.DTO
 @model OrderingDTO
 @{
     ViewData["Title"] = "Buat Pemesanan";
     var products = ViewBag.Products as List<ProductDTO> ?? new List<ProductDTO>();
+    var publishedProducts = products.Where(p => p.StatusProduct == GeneralStatus.GeneralStatusData.published).ToList();
 }
 
 <style>
     body {
-        background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+        background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
         font-family: 'Poppins', sans-serif;
         min-height: 100vh;
     }
@@ -59,8 +60,8 @@
 
         .form-control:focus,
         .form-select:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
             outline: none;
         }
 
@@ -103,12 +104,246 @@
     }
 
     .btn-primary {
-        background: #4f46e5;
+        background: #dc2626;
         border: none;
     }
 
         .btn-primary:hover {
-            background: #4338ca;
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        background: #718096;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background: #5a6b83;
+            transform: translateY(-2px);
+        }
+
+    .btn-remove {
+        background: #e53e3e;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        padding: 0.5rem;
+        transition: background 0.3s ease;
+    }
+
+        .btn-remove:hover {
+            background: #c53030;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+
+    .validation-summary {
+        background: #fef2f2;
+        border: 1px solid #f87171;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        color: #b91c1c;
+    }
+</style>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card p-4">
+                <h4>Buat Pemesanan</h4>
+                <div asp-validation-summary="All" class="validation-summary"></div>
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label asp-for="CustomerName" class="form-label"></label>
+                        <input asp-for="CustomerName" class="form-control" required />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                    </div>
+
+                    <div id="productList">
+                        <div class="product-item" data-index="0">
+                            <input type="hidden" name="OrderDetails.Index" value="0" />
+                            <select name="OrderDetails[0].ProductId" class="form-select" required>
+                                <option value="">Pilih Produk</option>
+                                @foreach (var p in products)
+                                {
+                                    <option value="@p.Id">@p.NameProduct (Stok: @p.Stock)</option>
+                                }
+                            </select>
+                            <input name="OrderDetails[0].Quantity" type="number" class="form-control" placeholder="Qty" min="1" required />
+                            <button type="button" class="btn btn-remove" onclick="hapusProduk(this)" title="Hapus Produk"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" onclick="tambahProduk()" class="btn btn-secondary">+ Tambah Produk</button>
+                        <button type="submit" class="btn btn-primary">Simpan Pesanan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function tambahProduk() {
+            var productList = document.getElementById("productList");
+            var itemCount = productList.getElementsByClassName("product-item").length;
+
+            var firstItem = productList.children[0];
+            var newItem = firstItem.cloneNode(true);
+
+            newItem.querySelector('input[type=hidden]').value = itemCount;
+            newItem.querySelector('select').name = `OrderDetails[${itemCount}].ProductId`;
+            newItem.querySelector('select').value = "";
+            newItem.querySelector('input[type=number]').name = `OrderDetails[${itemCount}].Quantity`;
+            newItem.querySelector('input[type=number]').value = "";
+
+            newItem.setAttribute("data-index", itemCount);
+            productList.appendChild(newItem);
+        }
+
+        function hapusProduk(button) {
+            var productList = document.getElementById("productList");
+            var itemCount = productList.getElementsByClassName("product-item").length;
+
+            if (itemCount > 1) {
+                button.parentElement.remove();
+                var items = productList.getElementsByClassName("product-item");
+                for (var i = 0; i < items.length; i++) {
+                    items[i].setAttribute("data-index", i);
+                    items[i].querySelector('input[type=hidden]').value = i;
+                    items[i].querySelector('select').name = `OrderDetails[${i}].ProductId`;
+                    items[i].querySelector('input[type=number]').name = `OrderDetails[${i}].Quantity`;
+                }
+            } else {
+                alert("Minimal harus ada satu produk dalam pesanan.");
+            }
+        }
+    </script>
+} *@
+
+@using SINTIA_DWI_ARGANI.Models.DTO
+@model OrderingDTO
+@{
+    ViewData["Title"] = "Buat Pemesanan";
+    var products = (ViewBag.Products as List<ProductDTO> ?? new List<ProductDTO>()).Where(p => p.StatusProduct == 0).ToList();
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+    }
+
+    .section {
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 60px);
+    }
+
+    .row {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        position: relative;
+        backdrop-filter: blur(10px);
+    }
+
+        .card h4 {
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+    .form-label {
+        font-weight: 500;
+        color: #4a5568;
+        font-size: 0.95rem;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        background: #f7fafc;
+        color: #4a5568;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            outline: none;
+        }
+
+    .text-danger {
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+
+    .product-item {
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid #e2e8f0;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .product-item:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item select,
+        .product-item input[type="number"] {
+            flex: 1;
+        }
+
+        .product-item input[type="number"] {
+            width: 100px;
+        }
+
+    .btn-primary,
+    .btn-secondary {
+        border-radius: 10px;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary {
+        background: #dc2626;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: #b91c1c;
             transform: translateY(-2px);
         }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SINTIA_DWI_ARGANI.Models;
 
@@ -11,9 +12,11 @@ using SINTIA_DWI_ARGANI.Models;
 namespace SINTIA_DWI_ARGANI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250427002313_AddedDTO")]
+    partial class AddedDTO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,11 +70,11 @@ namespace SINTIA_DWI_ARGANI.Migrations
                         {
                             Id = 1,
                             CashierStatus = 0,
-                            CreatedAt = new DateTime(2025, 4, 27, 17, 29, 49, 302, DateTimeKind.Utc).AddTicks(7966),
+                            CreatedAt = new DateTime(2025, 4, 27, 0, 23, 9, 878, DateTimeKind.Utc).AddTicks(9618),
                             Name = "Administrator",
-                            PasswordHash = "+o13+8MdDpAelVxceHL8GTfO1zVuRBdy7UsfqsH/3PEYGB90jm+lF7PwRPOSaMfSjX+uwO78fmvIIq0HprlCjw==",
+                            PasswordHash = "+hrwftlybeKaR9fsz63Zerw0tEG/fpfmVc89Af3iw7OySKW05grX+RtjTpqvqn1dB+wG89hCy9H91WaD+Oz1bw==",
                             Role = "Admin",
-                            Salt = "K+L4cobAxQlrIF28cEArng==",
+                            Salt = "WuOPkUbnG4++Om2bU7yWgw==",
                             Username = "admin"
                         });
                 });

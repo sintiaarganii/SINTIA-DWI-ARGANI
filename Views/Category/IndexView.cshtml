@@ -2,220 +2,234 @@
 @model List<CategoryDTO>
 
 @{
-    ViewData["Title"] = "Category Management";
+    ViewData["Title"] = "Category List";
+    Layout = "~/Views/Shared/_LayoutCashier.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Category Management - Admin Portal</title>
+<style>
+    .main {
+        padding: 2rem;
+    }
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    .pagetitle {
+        margin-bottom: 2rem;
+    }
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Simple DataTables CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <style>
-        body {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .main {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .pagetitle {
-            margin-bottom: 2rem;
-        }
-
-            .pagetitle h1 {
-                font-weight: 600;
-                color: #2d3748;
-            }
-
-        .breadcrumb {
-            background: none;
-            padding: 0;
-        }
-
-        .breadcrumb-item a {
-            color: #4f46e5;
-            text-decoration: none;
-        }
-
-            .breadcrumb-item a:hover {
-                text-decoration: underline;
-            }
-
-        .breadcrumb-item.active {
-            color: #718096;
-        }
-
-        .card {
-            border: none;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .category-icon {
-            background: #4f46e5;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-            .category-icon i {
-                color: white;
-                font-size: 1.5rem;
-            }
-
-        .card-title {
+        .pagetitle h1 {
             font-weight: 600;
             color: #2d3748;
-            margin-bottom: 1rem;
         }
 
-        .table {
-            border-radius: 10px;
-            overflow: hidden;
+    .breadcrumb {
+        background: none;
+        padding: 0;
+    }
+
+    .breadcrumb-item a {
+        color: #A31D1D;
+        text-decoration: none;
+    }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
         }
 
-            .table thead {
-                background: #4f46e5;
-                color: white;
+    .breadcrumb-item.active {
+        color: #718096;
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        position: relative;
+    }
+
+    .card-icon {
+        background: #A31D1D;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+        .card-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+    .card-title {
+        font-weight: 600;
+        color: #2d3748;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+        background: #A31D1D;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            background: #8a1919;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary i {
+            margin-right: 0.5rem;
+        }
+
+    .table-responsive {
+        border-radius: 10px;
+        overflow-x: auto;
+    }
+
+    .table {
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+        .table thead {
+            background: #f7fafc;
+        }
+
+        .table th {
+            color: #4a5568;
+            font-weight: 500;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .table td {
+            padding: 1rem;
+            color: #4a5568;
+            vertical-align: middle;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background: #f7fafc;
             }
 
-                .table thead th {
-                    font-weight: 500;
-                    padding: 1rem;
-                }
+    .badge.bg-success {
+        background: #10b981 !important;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+    }
 
-            .table tbody tr {
-                transition: background 0.3s ease;
-            }
+    .badge.bg-secondary {
+        background: #6b7280 !important;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+    }
 
-                .table tbody tr:hover {
-                    background: #f7fafc;
-                }
+    .btn-group .btn {
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
 
-            .table tbody td {
-                padding: 1rem;
-                color: #4a5568;
-                vertical-align: middle;
-            }
+    .btn-warning {
+        background: #f59e0b;
+        border: none;
+        color: white;
+    }
 
-        .badge.bg-success {
-            background: #10b981 !important;
+        .btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px);
         }
 
-        .badge.bg-secondary {
-            background: #6b7280 !important;
+    .btn-danger {
+        background: #e53e3e;
+        border: none;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background: #c53030;
+            transform: translateY(-2px);
         }
-    </style>
-</head>
-<body>
-    <main id="main" class="main">
-        <div class="pagetitle">
-            <div>
-                <h1>Category Management</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="breadcrumb-item">Categories</li>
-                        <li class="breadcrumb-item active">List</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
 
-        <section class="section">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                        <div class="category-icon">
-                            <i class="bi bi-tags"></i>
-                        </div>
-                        <div class="card-body pt-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="card-title mb-0">Category List</h5>
-                            </div>
+     .btn i {
+         margin-right: 0.3rem;
+     }
+ </style>
 
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover datatable w-100">
-                                    <thead>
+ <main id="main" class="main">
+     <div class="pagetitle">
+         <h1>Category Management</h1>
+         <nav>
+             <ol class="breadcrumb">
+                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                 <li class="breadcrumb-item">Products</li>
+                 <li class="breadcrumb-item active">List</li>
+             </ol>
+         </nav>
+     </div>
+
+     <section class="section">
+         <div class="row">
+             <div class="col-lg-12">
+                 <div class="card">
+                     <div class="card-icon">
+                         <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Category List</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover datatable" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Category Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var category in Model)
+                                    {
                                         <tr>
-                                            <th style="width: 5%;">ID</th>
-                                            <th>Category Name</th>
-                                            <th>Status</th>
+                                            <td>@category.Id</td>
+                                            <td>@category.CategoriName</td>
+                                            <td>
+                                                <span class="badge @(category.StatusCategori == 0 ? "bg-success" : "bg-secondary")">
+                                                    @(category.StatusCategori == 0 ? "Published" : "Unpublished")
+                                                </span>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var category in Model)
-                                        {
-                                            <tr>
-                                                <td>@category.Id</td>
-                                                <td>@category.CategoriName</td>
-                                                <td>
-                                                    <span class="badge @(category.StatusCategori == 0 ? "bg-success" : "bg-secondary")">
-                                                        @(category.StatusCategori == 0 ? "Published" : "Unpublished")
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Simple DataTables JS -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-
-    <!-- Initialize DataTable -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const datatables = document.querySelectorAll('.datatable');
-            datatables.forEach(datatable => {
-                new simpleDatatables.DataTable(datatable, {
-                    searchable: false, // Disable global search bar
-                    filters: false    // Disable column filters (e.g., Status filter)
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+        </div>
+    </section>
+</main>

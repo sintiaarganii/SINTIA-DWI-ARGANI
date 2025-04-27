@@ -5,6 +5,7 @@ using SINTIA_DWI_ARGANI.Models;
 using static SINTIA_DWI_ARGANI.Models.GeneralStatus;
 using SINTIA_DWI_ARGANI.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using iText.Commons.Actions.Data;
 
 namespace SINTIA_DWI_ARGANI.Services
 {
@@ -17,7 +18,7 @@ namespace SINTIA_DWI_ARGANI.Services
             _context = context;
         }
 
-        public List<ProductDTO> GetAllProducts()
+        /*public List<ProductDTO> GetAllProducts()
         {
             var products = _context.Products
                 .Include(y => y.Categori)
@@ -33,7 +34,28 @@ namespace SINTIA_DWI_ARGANI.Services
                     CategoriName = x.Categori.CategoriName,
                 }).ToList();
             return products;
+        }*/
+        public List<ProductDTO> GetAllProducts()
+        {
+            return _context.Products
+                .Include(p => p.Categori)
+                .Where(p => p.StatusProduct != GeneralStatusData.deleted)
+                .Select(p => new ProductDTO
+                {
+                    Id = p.Id,
+                    NameProduct = p.NameProduct,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    CategoriName = p.Categori.CategoriName,
+                    StatusProduct = p.StatusProduct,
+                    CategoryStatus = p.Categori.StatusCategori,
+                    EffectiveStatus = (p.Categori.StatusCategori == GeneralStatusData.published)
+                        ? p.StatusProduct
+                        : GeneralStatusData.unpublished
+                })
+                .ToList();
         }
+
 
         public List<SelectListItem> Products()
         {
@@ -57,54 +79,29 @@ namespace SINTIA_DWI_ARGANI.Services
 
             return product;
         }
-        /* public bool AddProduct(ProductDTO product)
-         {
-             var data = new Product();
-             data.NameProduct = product.NameProduct;
-             data.Description = product.Description;
-             data.Stock = product.Stock;
-             data.Price = product.Price;
-             data.StatusProduct = product.StatusProduct;
-             data.IdCategori = product.IdCategori;
+         public bool AddProduct(ProductDTO productDto)
+    {
+        var category = _context.Categoris.Find(productDto.IdCategori);
 
-             _context.Add(data);
-             _context.SaveChanges();
-             return true;
-         }
-         public bool EditProduct(ProductDTO product)
-         {
-             var data = _context.Products.FirstOrDefault(x => x.Id == product.Id);
-             if (data == null)
-             {
-                 return false;
-             }
-
-             data.NameProduct = product.NameProduct;
-             data.Stock = product.Stock;
-             data.Description = product.Description;
-             data.Price = product.Price;
-             data.StatusProduct = product.StatusProduct;
-
-             _context.Products.Update(data);
-             _context.SaveChanges();
-             return true;
-         }*/
-        public bool AddProduct(ProductDTO product)
+        // Auto-unpublish if category is unpublished or deleted
+        if (category.StatusCategori != GeneralStatusData.published)
         {
-            var data = new Product
-            {
-                NameProduct = product.NameProduct,
-                Description = product.Description,
-                Stock = product.Stock,
-                Price = product.Price,
-                StatusProduct = product.StatusProduct,
-                IdCategori = product.IdCategori
-            };
-
-            _context.Add(data);
-            _context.SaveChanges();
-            return true;
+            productDto.StatusProduct = GeneralStatusData.unpublished;
         }
+
+        var product = new Product
+        {
+            NameProduct = productDto.NameProduct,
+            Description = productDto.Description,
+            Stock = productDto.Stock,
+            Price = productDto.Price,
+            StatusProduct = productDto.StatusProduct,
+            IdCategori = productDto.IdCategori
+        };
+
+        _context.Products.Add(product);
+        return _context.SaveChanges() > 0;
+    }
 
         public bool EditProduct(ProductDTO product)
         {

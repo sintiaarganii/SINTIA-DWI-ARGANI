@@ -33,20 +33,21 @@ public class OrderingController : BaseController
 
     public IActionResult Create()
     {
-        var products = _context.Products
-            .Where(p => p.StatusProduct == GeneralStatus.GeneralStatusData.published)
-            .Select(p => new ProductDTO
-            {
-                Id = p.Id,
-                NameProduct = p.NameProduct,
-                Price = p.Price,
-                Stock = p.Stock,
-                StatusProduct = p.StatusProduct
-            })
-            .ToList();
+        var model = new OrderingDTO();
+        // Fetch only published products
+        var products = (from product in _context.Products
+                        where product.StatusProduct == 0 // Only Published products
+                        select new ProductDTO
+                        {
+                            Id = product.Id,
+                            NameProduct = product.NameProduct,
+                            Stock = product.Stock,
+                            StatusProduct = product.StatusProduct
+                            // Include other properties as needed
+                        }).ToList();
 
         ViewBag.Products = products;
-        return View(new OrderingDTO());
+        return View(model);
     }
 
     [HttpPost]

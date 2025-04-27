@@ -13,8 +13,11 @@ namespace SINTIA_DWI_ARGANI.Models.DTO
 
         public int IdCategori { get; set; }
         public string CategoriName { get; set; }
+        public GeneralStatusData CategoryStatus { get; set; } // Add this property
 
         [Required(ErrorMessage = "Status is required.")]
         public GeneralStatusData StatusProduct { get; set; }
+        public GeneralStatusData EffectiveStatus { get; set; }
+
     }
 }

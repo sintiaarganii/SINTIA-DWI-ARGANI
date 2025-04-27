@@ -102,14 +102,6 @@ using UITraining.Services;
 var builder = WebApplication.CreateBuilder(args);
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 
-// Add services to the container.
-//builder.Services.AddDbContext<ApplicationContext>(
-//    DbContextOptions => DbContextOptions
-//        .UseMySql(builder.Configuration.GetConnectionString("MyConnectionStrings"), serverVersion)
-//        .LogTo(Console.WriteLine, LogLevel.Information)
-//        .EnableSensitiveDataLogging()
-//        .EnableDetailedErrors()
-//);
 builder.Services.AddDbContext<ApplicationContext>(
     DbContextOptions => DbContextOptions
         .UseMySql(builder.Configuration.GetConnectionString("MyConnectionStrings"), serverVersion)
@@ -118,7 +110,14 @@ builder.Services.AddDbContext<ApplicationContext>(
         .EnableDetailedErrors()
 );
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+    options.Secure = CookieSecurePolicy.Always;
+    options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
+});
 
+builder.Services.AddScoped<IAuthentication, AuthenticationService>();
 // Add services to the container
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
@@ -184,6 +183,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "default",
