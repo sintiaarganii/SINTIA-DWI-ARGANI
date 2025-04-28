@@ -46,22 +46,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cUmVnaXN0ZXJDYXNoaWVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/CashierAccess/Edited.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllckFjY2Vzc1xFZGl0ZWQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/CashierAccess/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllckFjY2Vzc1xJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/CashierAccess/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllckFjY2Vzc1xMb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/CashierAccess/RegisterCashier.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllckFjY2Vzc1xSZWdpc3RlckNhc2hpZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/CashierHome/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllckhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -112,18 +96,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/Product/IndexView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxJbmRleFZpZXcuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/Profile/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/Profile/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/Profile/Settings.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxTZXR0aW5ncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/sintiaargn/source/repos/SINTIA DWI ARGANI/Views/Shared/Error.cshtml]

@@ -1,10 +1,13 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SINTIA_DWI_ARGANI.Filters;
 using SINTIA_DWI_ARGANI.Interfaces;
 using SINTIA_DWI_ARGANI.Models;
 using SINTIA_DWI_ARGANI.Models.DTO;
+using SINTIA_DWI_ARGANI.Services;
 
 namespace SINTIA_DWI_ARGANI.Controllers
 {
@@ -39,7 +42,7 @@ namespace SINTIA_DWI_ARGANI.Controllers
                                 Stock = product.Stock,
                                 CategoriName = category.CategoriName,
                                 StatusProduct = product.StatusProduct,
-                                CategoryStatus = category.StatusCategori // Populate the new property
+                                CategoryStatus = category.StatusCategori 
                             }).ToList();
 
             return View(products);
@@ -58,88 +61,84 @@ namespace SINTIA_DWI_ARGANI.Controllers
                                 Stock = product.Stock,
                                 CategoriName = category.CategoriName,
                                 StatusProduct = product.StatusProduct,
-                                CategoryStatus = category.StatusCategori // Populate the new property
+                                CategoryStatus = category.StatusCategori 
                             }).ToList();
 
             return View(products);
         }
 
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(int id)
         {
-            ViewBag.Categori = _categori.Categories();
+            var product = id == 0
+                ? new ProductDTO()
+                : _interface.GetProductById(id);
 
-            if (Id == 0)
-            {
-                // For add new product
-                return View(new ProductDTO());
-            }
-
-            var product = _interface.GetProductById(Id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            // Map Product to ProductDTO
-            var productDto = new ProductDTO
-            {
-                Id = product.Id,
-                NameProduct = product.NameProduct,
-                Description = product.Description,
-                Price = product.Price,
-                Stock = product.Stock,
-                StatusProduct = product.StatusProduct,
-                IdCategori = product.IdCategori
-            };
+            // Isi ViewBag.Categories dengan daftar kategori
+            ViewBag.Categories = _categoryService.Categories();
 
-            return View(productDto);
+            // Debugging: Log jumlah kategori
+            Debug.WriteLine($"Jumlah kategori di ViewBag: {(ViewBag.Categories as List<SelectListItem>)?.Count ?? 0}");
+            foreach (var category in ViewBag.Categories as List<SelectListItem> ?? new List<SelectListItem>())
+            {
+                Debug.WriteLine($"Kategori: {category.Text}, ID: {category.Value}");
+            }
+
+            return View(product);
         }
 
         [HttpPost]
         public IActionResult Edit(ProductDTO product)
         {
-            // Perform validation
-            var validationResult = _productValidator.Validate(product);
+            Debug.WriteLine($"Data diterima: Id={product.Id}, NameProduct={product.NameProduct}, IdCategori={product.IdCategori}, StatusProduct={product.StatusProduct}");
 
+            var validationResult = _productValidator.Validate(product);
             if (!validationResult.IsValid)
             {
-                // Add validation errors to ModelState
+                Debug.WriteLine("Validasi gagal:");
                 foreach (var error in validationResult.Errors)
                 {
+                    Debug.WriteLine($"Error: {error.PropertyName} - {error.ErrorMessage}");
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
+            }
 
-                ViewBag.Categori = _categori.Categories();
+            //if (!ModelState.IsValid)
+            //{
+            //    Debug.WriteLine("ModelState tidak valid. Mengembalikan view.");
+            //    ViewBag.Categories = _categoryService.Categories();
+            //    return View(product);
+            //}
+
+            try
+            {
+                bool success = product.Id == 0
+                    ? _interface.AddProduct(product)
+                    : _interface.EditProduct(product);
+
+                if (success)
+                {
+                    Debug.WriteLine("Produk berhasil disimpan.");
+                    return RedirectToAction(nameof(Index));
+                }
+
+                Debug.WriteLine("Gagal menyimpan produk.");
+                ViewBag.Categories = _categoryService.Categories();
+                ModelState.AddModelError("", "Failed to save product.");
                 return View(product);
             }
-
-            if (product.Id == 0)
+            catch (Exception ex)
             {
-                // Add new product
-                var addProduct = _interface.AddProduct(product);
-                if (addProduct)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
-                ModelState.AddModelError("", "Failed to add product");
+                Debug.WriteLine($"Error saat menyimpan: {ex.Message}");
+                ViewBag.Categories = _categoryService.Categories();
+                ModelState.AddModelError("", $"Error saving product: {ex.Message}");
+                return View(product);
             }
-            else
-            {
-                // Edit existing product
-                var editProduct = _interface.EditProduct(product);
-                if (editProduct)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
-                ModelState.AddModelError("", "Failed to update product");
-            }
-
-            ViewBag.Categori = _categori.Categories();
-            return View(product);
-        }
-        //[HttpPost]
+        }        //[HttpPost]
         //public IActionResult Edit(ProductDTO product)
         //{
         //    // Perform validation

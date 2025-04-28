@@ -238,27 +238,22 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Apply animation delays
         document.querySelectorAll('[data-animate-delay]').forEach(el => {
             el.style.animationDelay = el.getAttribute('data-animate-delay');
         });
 
-        // Filter functionality (placeholder)
         $('.filter-option').on('click', function (e) {
             e.preventDefault();
             const filter = $(this).data('filter');
             const card = $(this).data('card');
 
-            // Update filter text
             $(`#${card}-filter`).text(`| ${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
 
-            // Show loading animation
             $(this).closest('.card').addClass('animate_animated animate_pulse');
             setTimeout(() => {
                 $(this).closest('.card').removeClass('animate_animated animate_pulse');
             }, 1000);
 
-            // In a real app, you would make an AJAX call here
             console.log(`Filter changed to ${filter} for ${card}`);
         });
     });
@@ -318,7 +313,7 @@
     }
 
     .text-danger {
-        color: #8F87F1 !important; /* Replaced #dc3545 with #8F87F1 */
+        color: #8F87F1 !important; 
     }
 
     .badge {

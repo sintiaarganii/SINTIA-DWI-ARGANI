@@ -55,7 +55,6 @@ namespace SINTIA_DWI_ARGANI.Models
                 .Property(p => p.Stock)
                 .IsRequired();
 
-            // Gunakan nilai dari konfigurasi, bukan hardcode
             var pepper = _configuration["Security:Pepper"];
             var iteration = Convert.ToInt32(_configuration["Security:Iteration"]);
             var salt = Hasher.GenerateSalt();
@@ -63,10 +62,10 @@ namespace SINTIA_DWI_ARGANI.Models
             modelBuilder.Entity<Cashier>().HasData(
                 new Cashier
                 {
-                    Id = 1, // Ubah dari 3 ke 1 untuk konsistensi
+                    Id = 1,
                     Name = "Administrator",
                     Username = "admin",
-                    Salt = salt, // Gunakan salt yang baru digenerate
+                    Salt = salt, 
                     PasswordHash = Hasher.ComputeHash("admin123", salt, pepper, iteration),
                     Role = "Admin",
                     CreatedAt = DateTime.UtcNow,

@@ -34,16 +34,14 @@ public class OrderingController : BaseController
     public IActionResult Create()
     {
         var model = new OrderingDTO();
-        // Fetch only published products
         var products = (from product in _context.Products
-                        where product.StatusProduct == 0 // Only Published products
+                        where product.StatusProduct == 0 
                         select new ProductDTO
                         {
                             Id = product.Id,
                             NameProduct = product.NameProduct,
                             Stock = product.Stock,
                             StatusProduct = product.StatusProduct
-                            // Include other properties as needed
                         }).ToList();
 
         ViewBag.Products = products;

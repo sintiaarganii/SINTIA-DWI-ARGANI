@@ -25,7 +25,7 @@
     }
 
     .breadcrumb-item a {
-        color: #A31D1D; /* Diubah ke merah */
+        color: #4154f1; 
         text-decoration: none;
     }
 
@@ -48,7 +48,7 @@
     }
 
     .card-icon {
-        background: #A31D1D; /* Diubah ke merah */
+        background: #4154f1;
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -76,7 +76,7 @@
     }
 
     .btn-primary {
-        background: #A31D1D; /* Diubah ke merah */
+        background: #4154f1;
         border: none;
         border-radius: 10px;
         padding: 0.75rem 1.5rem;
@@ -85,7 +85,7 @@
     }
 
         .btn-primary:hover {
-            background: #8a1919; /* Warna merah lebih gelap */
+            background: #3345c1;
             transform: translateY(-2px);
         }
 
@@ -221,7 +221,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach (var product in Model.Where(p => p.StatusProduct != GeneralStatus.GeneralStatusData.deleted))
+                                    @foreach (var product in Model.Where(p =>
+                                    p.StatusProduct != GeneralStatus.GeneralStatusData.deleted &&
+                                    p.CategoryStatus != GeneralStatus.GeneralStatusData.deleted))
                                     {
                                         <tr>
                                             <td>@product.Id</td>

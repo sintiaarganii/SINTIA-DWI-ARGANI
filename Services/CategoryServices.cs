@@ -5,6 +5,7 @@ using SINTIA_DWI_ARGANI.Interfaces;
 using SINTIA_DWI_ARGANI.Models;
 using SINTIA_DWI_ARGANI.Models.DB;
 using SINTIA_DWI_ARGANI.Models.DTO;
+using SINTIA_DWI_ARGANI.Services;
 using static SINTIA_DWI_ARGANI.Models.GeneralStatus;
 
 namespace UITraining.Services
@@ -81,33 +82,27 @@ namespace UITraining.Services
             _context.Categoris.Update(data);
             _context.SaveChanges();
 
+            // Panggil AutoUpdateProductStatusBasedOnCategory jika status kategori berubah menjadi unpublished atau deleted
+            if (data.StatusCategori != GeneralStatusData.published)
+            {
+                var productService = new ProductServices(_context);
+                productService.AutoUpdateProductStatusBasedOnCategory();
+            }
+
             return true;
-            //    var category = _context.Categoris
-            //.Include(c => c.Products)
-            //.FirstOrDefault(c => c.Id == CategiriDTO.Id);
-
-            //    if (category == null) return false;
-
-            //    category.StatusCategori = newStatus;
-
-            //    // If category is being unpublished or deleted, unpublish all its products
-            //    if (newStatus != GeneralStatusData.published)
-            //    {
-            //        foreach (var product in category.Products)
-            //        {
-            //            product.StatusProduct = GeneralStatusData.unpublished;
-            //        }
-            //    }
-
-            //    return _context.SaveChanges() > 0;
         }
         public bool DeleteCategori(int Id)
         {
-            var Caretory = _context.Categoris.FirstOrDefault(x => x.Id == Id);
-            if (Caretory != null && Caretory.StatusCategori != GeneralStatusData.deleted)
+            var category = _context.Categoris.FirstOrDefault(x => x.Id == Id);
+            if (category != null && category.StatusCategori != GeneralStatusData.deleted)
             {
-                Caretory.StatusCategori = GeneralStatusData.deleted;
+                category.StatusCategori = GeneralStatusData.deleted;
                 _context.SaveChanges();
+
+                // Panggil AutoUpdateProductStatusBasedOnCategory setelah menghapus kategori
+                var productService = new ProductServices(_context);
+                productService.AutoUpdateProductStatusBasedOnCategory();
+
                 return true;
             }
             return false;

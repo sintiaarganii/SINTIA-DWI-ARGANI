@@ -53,8 +53,12 @@
 
                             <div class="col-md-6">
                                 <label for="IdCategori" class="form-label">Category</label>
-                                <select class="form-select" asp-for="IdCategori" asp-items="ViewBag.Categori" required>
+                                <select asp-for="IdCategori" class="form-select" required>
                                     <option value="">-- Select Category --</option>
+                                    @foreach (var category in ViewBag.Categories as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>())
+                                    {
+                                        <option value="@category.Value">@category.Text</option>
+                                    }
                                 </select>
                                 <span asp-validation-for="IdCategori" class="text-danger"></span>
                                 <div class="invalid-feedback">Please select a category.</div>
